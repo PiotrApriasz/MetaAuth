@@ -8,11 +8,14 @@
 
 
     <ItemGroup>
-        <SupportedPlatform Include="browser"/>
+        <SupportedPlatform Include="browser" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.4"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.4" />
+        <PackageReference Include="Nethereum.Signer.EIP712" Version="4.4.1" />
+        <PackageReference Include="Nethereum.StandardNonFungibleTokenERC721" Version="4.4.1" />
+        <PackageReference Include="Nethereum.Web3" Version="4.4.1" />
     </ItemGroup>
 
 </Project>

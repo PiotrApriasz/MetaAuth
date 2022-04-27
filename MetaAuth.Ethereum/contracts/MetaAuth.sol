@@ -23,7 +23,7 @@ contract MetaAuth is ERC721, ERC721URIStorage, Pausable, Ownable, ERC721Burnable
         _unpause();
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function safeMint(address to, string memory uri) public {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
