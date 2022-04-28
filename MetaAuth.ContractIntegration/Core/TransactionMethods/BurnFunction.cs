@@ -1,4 +1,5 @@
-﻿using Nethereum.ABI.FunctionEncoding.Attributes;
+﻿using System.Numerics;
+using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 
 namespace MetaAuth.ContractIntegration.Core.TransactionMethods;
@@ -7,5 +8,5 @@ namespace MetaAuth.ContractIntegration.Core.TransactionMethods;
 public class BurnFunction : FunctionMessage
 {
     [Parameter("uint256", "tokenId")]
-    public int TokenId { get; set; }
+    public BigInteger TokenId { get; set; }
 }

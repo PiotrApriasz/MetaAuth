@@ -7,13 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Nethereum.Signer.EIP712" Version="4.4.1" />
-      <PackageReference Include="Nethereum.StandardNonFungibleTokenERC721" Version="4.4.1" />
       <PackageReference Include="Nethereum.Web3" Version="4.4.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\MetaAuth.Metamask\MetaAuth.Metamask.csproj" />
     </ItemGroup>
 
 </Project>

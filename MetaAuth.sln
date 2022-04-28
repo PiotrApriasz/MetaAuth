@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.Metamask.Blazor", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.ContractIntegration", "MetaAuth.ContractIntegration\MetaAuth.ContractIntegration.csproj", "{19B9A15C-0BC4-4123-B6FC-57D163B4235D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.Metamask", "MetaAuth.Metamask\MetaAuth.Metamask.csproj", "{455BA368-FE10-460E-94AF-54DEC436D3CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{19B9A15C-0BC4-4123-B6FC-57D163B4235D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19B9A15C-0BC4-4123-B6FC-57D163B4235D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19B9A15C-0BC4-4123-B6FC-57D163B4235D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{455BA368-FE10-460E-94AF-54DEC436D3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{455BA368-FE10-460E-94AF-54DEC436D3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{455BA368-FE10-460E-94AF-54DEC436D3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{455BA368-FE10-460E-94AF-54DEC436D3CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

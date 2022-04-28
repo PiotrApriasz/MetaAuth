@@ -1,4 +1,5 @@
-﻿using Nethereum.ABI.FunctionEncoding.Attributes;
+﻿using System.Numerics;
+using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 
 namespace MetaAuth.ContractIntegration.Core.QueryMethods;
@@ -7,5 +8,5 @@ namespace MetaAuth.ContractIntegration.Core.QueryMethods;
 public class OwnerOfFunction : FunctionMessage
 {
     [Parameter("uint256", "_tokenId", 1)]
-    public int TokenId { get; set; }
+    public BigInteger TokenId { get; set; }
 }

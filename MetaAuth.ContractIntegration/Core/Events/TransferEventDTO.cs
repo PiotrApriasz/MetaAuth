@@ -7,9 +7,9 @@ namespace MetaAuth.ContractIntegration.Core.Events;
 public class TransferEventDTO : IEventDTO
 {
     [Parameter("address", "_from", 1, true )]
-    public virtual string From { get; set; }
+    public string From { get; set; }
     [Parameter("address", "_to", 2, true )]
-    public virtual string To { get; set; }
+    public string To { get; set; }
     [Parameter("uint256", "_tokenId", 3, true )]
-    public virtual BigInteger TokenId { get; set; }
+    public BigInteger TokenId { get; set; }
 }
