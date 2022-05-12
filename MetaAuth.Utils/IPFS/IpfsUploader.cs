@@ -11,21 +11,18 @@ internal class IpfsUploader
     private readonly HttpClient _httpClient;
     private readonly string _url;
 
-    public IpfsUploader(string url, HttpClient httpClient)
+    public IpfsUploader(string url, string userName, string password, HttpClient httpClient)
     {
         if (!url.EndsWith("api/v0")) url = url.TrimEnd('/') + "/api/v0";
 
         _url = url;
         _httpClient = httpClient;
-    }
-
-    public IpfsUploader(string url, string userName, string password, HttpClient httpClient) : this(url, httpClient)
-    {
+        
         var byteArray = Encoding.UTF8.GetBytes(userName + ":" + password);
         _authHeaderValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
     }
     
-    public async Task<IpfsFileInfo> AddObjectAsJson<T>(T objectToSerialise, string fileName, bool pin = true)
+    public async Task<IpfsFileInfo> AddObjectAsJson(MetaAuthMetadata objectToSerialise, string fileName, bool pin = true)
     {
         await using var ms = new MemoryStream();
         var serializer = new JsonSerializer();
@@ -54,7 +51,7 @@ internal class IpfsUploader
 
         _httpClient.DefaultRequestHeaders.Authorization = _authHeaderValue;
         var query = pin ? "?pin=true&cid-version=1" : "?cid-version=1";
-        var fullUrl = _url + "/add" + query;
+        var fullUrl = _url + "/add";
         var httpResponseMessage = await _httpClient.PostAsync(fullUrl, content);
         httpResponseMessage.EnsureSuccessStatusCode();
         var stream = await httpResponseMessage.Content.ReadAsStreamAsync();
@@ -63,6 +60,7 @@ internal class IpfsUploader
         using var reader = new JsonTextReader(streamReader);
         var serializer = JsonSerializer.Create();
         var message = serializer.Deserialize<IpfsFileInfo>(reader);
+        
 
         return message;
     }
