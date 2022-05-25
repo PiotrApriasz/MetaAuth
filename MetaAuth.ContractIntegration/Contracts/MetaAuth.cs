@@ -3,6 +3,7 @@ using MetaAuth.ContractIntegration.Core.QueryMethods;
 using MetaAuth.ContractIntegration.Core.TransactionMethods;
 using MetaAuth.Metamask.Ethereum;
 using Nethereum.Contracts.ContractHandlers;
+using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Web3;
 
 namespace MetaAuth.ContractIntegration.Contracts;
@@ -18,59 +19,59 @@ public class MetaAuth : IContract
         ContractHandler = Web3.Eth.GetContractHandler(contractAddress);
     }
 
-    public Task<BigInteger> BalanceOfQueryAsync(string owner)
+    public async Task<BigInteger> BalanceOfQueryAsync(string owner)
     {
         var balanceOfFunction = new BalanceOfFunction
         {
             Owner = owner
         };
 
-        return ContractHandler.QueryAsync<BalanceOfFunction, BigInteger>(balanceOfFunction);
+        return await ContractHandler.QueryAsync<BalanceOfFunction, BigInteger>(balanceOfFunction);
     }
 
-    public Task<string> OwnerOfQueryAsync(BigInteger tokenId)
+    public async Task<string> OwnerOfQueryAsync(BigInteger tokenId)
     {
         var ownerOfFunction = new OwnerOfFunction()
         {
             TokenId = tokenId
         };
 
-        return ContractHandler.QueryAsync<OwnerOfFunction, string>(ownerOfFunction);
+        return await ContractHandler.QueryAsync<OwnerOfFunction, string>(ownerOfFunction);
     }
 
-    public Task<string> TokenUriQueryAsync(BigInteger tokenId)
+    public async Task<string> TokenUriQueryAsync(BigInteger tokenId)
     {
         var tokenUriFunction = new TokenUriFunction()
         {
             TokenId = tokenId
         };
 
-        return ContractHandler.QueryAsync<TokenUriFunction, string>(tokenUriFunction);
+        return await ContractHandler.QueryAsync<TokenUriFunction, string>(tokenUriFunction);
     }
 
-    public Task<string> BurnRequestAsync(BigInteger tokenId)
+    public async Task<string> BurnRequestAsync(BigInteger tokenId)
     {
         var burnFunction = new BurnFunction()
         {
             TokenId = tokenId
         };
 
-        return ContractHandler.SendRequestAsync(burnFunction);
+        return await ContractHandler.SendRequestAsync(burnFunction);
     }
 
-    public Task<string> PauseRequestAsync()
+    public async Task<string> PauseRequestAsync()
     {
         var pauseFunction = new PauseFunction();
-        return ContractHandler.SendRequestAsync(pauseFunction);
+        return await ContractHandler.SendRequestAsync(pauseFunction);
     }
     
-    public Task<string> UnPauseRequestAsync()
+    public async Task<string> UnPauseRequestAsync()
     {
         var unpauseFunction = new UnpauseFunction();
-        return ContractHandler.SendRequestAsync(unpauseFunction);
+        return await ContractHandler.SendRequestAsync(unpauseFunction);
     }
 
-    public Task<string> SafeMintRequestAsync(string to, string uri)
+    public async Task<TransactionReceipt> SafeMintRequestAsync(string to, string uri)
     {
         var safeMintFunction = new SafeMintFunction()
         {
@@ -78,6 +79,17 @@ public class MetaAuth : IContract
             Uri = uri
         };
 
-        return ContractHandler.SendRequestAsync(safeMintFunction);
+        return await ContractHandler.SendRequestAndWaitForReceiptAsync(safeMintFunction);
+    }
+
+    public async Task<string> UpdateTokenUriRequestAsync(BigInteger tokenId, string uri)
+    {
+        var updateTokenUriFunction = new UpdateTokenURIFunction
+        {
+            TokenId = tokenId,
+            Uri = uri
+        };
+
+        return await ContractHandler.SendRequestAsync(updateTokenUriFunction);
     }
 }

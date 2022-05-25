@@ -3,7 +3,9 @@ using MetaAuth.Utils.IPFS.Entities;
 
 namespace MetaAuth.Utils.IPFS;
 
-public class IpfsService
+public class IpfsService<T, TEnum> 
+    where TEnum : Enum
+    where T : MetaAuthMetadata<TEnum>
 {
     private readonly string _userName;
     private readonly string _password;
@@ -20,16 +22,16 @@ public class IpfsService
         _password = password;
     }
 
-    public async Task<IpfsFileInfo> AddNftMetadataToIpfsAsync(MetaAuthMetadata metadata, string fileName)
+    public async Task<IpfsFileInfo> AddNftMetadataToIpfsAsync(T metadata, string fileName)
     {
-        var ipfsUploader = new IpfsUploader(_ipfsUrl, _userName, _password, _httpClient);
+        var ipfsUploader = new IpfsUploader<T, TEnum>(_ipfsUrl, _userName, _password, _httpClient);
         var result = await ipfsUploader.AddObjectAsJson(metadata, fileName);
         return result;
     }
 
-    public async Task<MetaAuthMetadata> GetNftMetadataFromIpfsAsync(string cid)
+    public async Task<T> GetNftMetadataFromIpfsAsync(string cid)
     {
-        var ipfsDownloader = new IpfsDownloader(_ipfsGateway, cid, _httpClient);
+        var ipfsDownloader = new IpfsDownloader<T, TEnum>(_ipfsGateway, cid, _httpClient);
         var result = await ipfsDownloader.GetAsync();
         return result;
     }

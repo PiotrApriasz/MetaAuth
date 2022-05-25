@@ -8,10 +8,10 @@ namespace MetaAuth.Test;
 
 public class IpfsServiceTest
 {
-    private MetaAuthMetadata GetMetadata() =>
-        new MetaAuthMetadata()
+    private static MetaAuthMetadata<MetaAuthType> GetMetadata() =>
+        new()
         {
-            Name = "MetaAuth_TestUser",
+            Type = MetaAuthType.UserData,
             Description = "This is test ipfs data for testing IpfsService in MetaAuth app",
             Username = "testuser",
             IssueTime = 123456,
@@ -27,8 +27,8 @@ public class IpfsServiceTest
         return mockFactory.Object.CreateClient();
     }
 
-    private IpfsService GetIpfsSerrvice() =>
-        new IpfsService("28k2jK8Gu4h3ZhNbLclNlI0qx81", "c0903b857c2818539f1b27c308fd9bf7",
+    private IpfsService<MetaAuthMetadata<MetaAuthType>, MetaAuthType> GetIpfsSerrvice() =>
+        new("28k2jK8Gu4h3ZhNbLclNlI0qx81", "c0903b857c2818539f1b27c308fd9bf7",
             "https://ipfs.infura.io:5001", "https://meta-auth.infura-ipfs.io", MockHttpClient());
 
     [Fact]

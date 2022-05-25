@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MetaAuth.ContractIntegration\MetaAuth.ContractIntegration.csproj" />
       <ProjectReference Include="..\MetaAuth.Utils\MetaAuth.Utils.csproj" />
     </ItemGroup>
 

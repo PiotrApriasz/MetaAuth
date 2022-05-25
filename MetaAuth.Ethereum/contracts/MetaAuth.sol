@@ -50,4 +50,8 @@ contract MetaAuth is ERC721, ERC721URIStorage, Pausable, Ownable, ERC721Burnable
     {
         return super.tokenURI(tokenId);
     }
+    
+    function updateTokenURI(uint256 tokenId, string memory uri) public {
+        _setTokenURI(tokenId, uri);
+    }
 }
