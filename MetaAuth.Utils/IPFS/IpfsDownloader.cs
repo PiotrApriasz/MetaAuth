@@ -3,9 +3,8 @@ using Newtonsoft.Json;
 
 namespace MetaAuth.Utils.IPFS;
 
-public class IpfsDownloader<T, TEnum>
-    where TEnum : Enum
-    where T : MetaAuthMetadata<TEnum>
+public class IpfsDownloader<T>
+    where T : MetaAuthMetadata
 {
     private string _cid;
     private readonly HttpClient _httpClient;

@@ -1,11 +1,11 @@
 ﻿using Ipfs.Http;
+using MetaAuth.Utils.Exceptions;
 using MetaAuth.Utils.IPFS.Entities;
 
 namespace MetaAuth.Utils.IPFS;
 
-public class IpfsService<T, TEnum> 
-    where TEnum : Enum
-    where T : MetaAuthMetadata<TEnum>
+public class IpfsService<T> : IIpfsService<T>
+    where T : MetaAuthMetadata
 {
     private readonly string _userName;
     private readonly string _password;
@@ -24,15 +24,31 @@ public class IpfsService<T, TEnum>
 
     public async Task<IpfsFileInfo> AddNftMetadataToIpfsAsync(T metadata, string fileName)
     {
-        var ipfsUploader = new IpfsUploader<T, TEnum>(_ipfsUrl, _userName, _password, _httpClient);
-        var result = await ipfsUploader.AddObjectAsJson(metadata, fileName);
-        return result;
+        try
+        {
+            var ipfsUploader = new IpfsUploader<T>(_ipfsUrl, _userName, _password, _httpClient);
+            var result = await ipfsUploader.AddObjectAsJson(metadata, fileName);
+            return result;
+        }
+        catch (Exception e)
+        {
+            throw new IpfsConnectionException
+                ($"Error occured while adding file to ipfs service | {e.Message} | {e.StackTrace}");
+        }
     }
 
     public async Task<T> GetNftMetadataFromIpfsAsync(string cid)
     {
-        var ipfsDownloader = new IpfsDownloader<T, TEnum>(_ipfsGateway, cid, _httpClient);
-        var result = await ipfsDownloader.GetAsync();
-        return result;
+        try
+        {
+            var ipfsDownloader = new IpfsDownloader<T>(_ipfsGateway, cid, _httpClient);
+            var result = await ipfsDownloader.GetAsync();
+            return result;
+        }
+        catch (Exception e)
+        {
+            throw new IpfsConnectionException
+                ($"Error occured while getting data from ipfs service | {e.Message} | {e.StackTrace}");
+        }
     }
 }

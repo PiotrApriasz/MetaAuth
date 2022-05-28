@@ -1,6 +1,9 @@
-﻿namespace MetaAuth.Utils.IPFS;
+﻿using MetaAuth.Utils.IPFS.Entities;
 
-public interface IIpfsService
+namespace MetaAuth.Utils.IPFS;
+
+public interface IIpfsService<T>
 {
-    
+    Task<IpfsFileInfo> AddNftMetadataToIpfsAsync(T metadata, string fileName);
+    Task<T> GetNftMetadataFromIpfsAsync(string cid);
 }

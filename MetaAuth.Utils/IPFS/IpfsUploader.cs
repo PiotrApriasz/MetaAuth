@@ -5,9 +5,8 @@ using Newtonsoft.Json;
 
 namespace MetaAuth.Utils.IPFS;
 
-internal class IpfsUploader<T, TEnum> 
-    where TEnum : Enum
-    where T : MetaAuthMetadata<TEnum>
+internal class IpfsUploader<T>
+    where T : MetaAuthMetadata
 {
     private readonly AuthenticationHeaderValue _authHeaderValue;
     private readonly HttpClient _httpClient;

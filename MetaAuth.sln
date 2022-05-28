@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.Utils", "MetaAuth.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.Test", "MetaAuth.Test\MetaAuth.Test.csproj", "{02E76816-B2A2-42E7-9DD1-7A79E05F740F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.MTA", "MetaAuth.MTA\MetaAuth.MTA.csproj", "{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{02E76816-B2A2-42E7-9DD1-7A79E05F740F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02E76816-B2A2-42E7-9DD1-7A79E05F740F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02E76816-B2A2-42E7-9DD1-7A79E05F740F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

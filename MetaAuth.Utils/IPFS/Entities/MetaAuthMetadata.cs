@@ -8,16 +8,14 @@ namespace MetaAuth.Utils.IPFS.Entities;
 /// you need to store on ipfs. Your class needs to be extended
 /// with this class because generics methods only allows
 /// types with this class as base.
-/// As generic type this class takes enum with nft types
-/// For example: UserData, Address, BankData
 /// </summary>
-public class MetaAuthMetadata<T> where T : Enum
+public class MetaAuthMetadata
 {
     /// <summary>
     /// Specify type of MetaAuth token
     /// </summary>
     [JsonProperty("type")]
-    public T? Type { get; set; }
+    public MetaAuthType Type { get; set; }
     
     /// <summary>
     /// Description to better understand what is specific token for

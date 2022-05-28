@@ -21,7 +21,7 @@ public class MetaAuthContractTest
         return new Web3(account, infuraUrl);
     }
     
-    private MetaAuthMetadata<MetaAuthType> GetMetadata() =>
+    private MetaAuthMetadata GetMetadata() =>
         new()
         {
             Type = MetaAuthType.UserData,
@@ -40,7 +40,7 @@ public class MetaAuthContractTest
         return mockFactory.Object.CreateClient();
     }
 
-    private IpfsService<MetaAuthMetadata<MetaAuthType>, MetaAuthType> GetIpfsSerrvice() =>
+    private IpfsService<MetaAuthMetadata> GetIpfsSerrvice() =>
         new ("28k2jK8Gu4h3ZhNbLclNlI0qx81", "c0903b857c2818539f1b27c308fd9bf7",
             "https://ipfs.infura.io:5001", "https://meta-auth.infura-ipfs.io", MockHttpClient());
     
@@ -50,8 +50,8 @@ public class MetaAuthContractTest
         var web3 = GetWeb3();
         web3.Eth.TransactionManager.UseLegacyAsDefault = true;
 
-        var metaAuthContract = new ContractIntegration.Contracts.MetaAuth
-            (new MetamaskHostProvider(null), "0x9c3507cbf042f5bd7df1b8fd449ebb31b62ae948");
+        var metaAuthContract = new MetaAuthContract
+            (web3, "0x9c3507cbf042f5bd7df1b8fd449ebb31b62ae948");
         
         var ipfsService = GetIpfsSerrvice();
         var returnData = await ipfsService.AddNftMetadataToIpfsAsync(GetMetadata(), "metaauth-9971-testuser.json");

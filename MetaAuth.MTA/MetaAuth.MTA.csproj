@@ -7,13 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Ipfs.Http.Client" Version="0.33.0" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\MetaAuth.ContractIntegration\MetaAuth.ContractIntegration.csproj" />
-      <ProjectReference Include="..\MetaAuth.Metamask.Blazor\MetaAuth.Metamask.Blazor.csproj" />
-      <ProjectReference Include="..\MetaAuth.Metamask\MetaAuth.Metamask.csproj" />
+      <ProjectReference Include="..\MetaAuth.Utils\MetaAuth.Utils.csproj" />
     </ItemGroup>
 
 </Project>

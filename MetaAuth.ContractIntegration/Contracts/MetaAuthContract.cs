@@ -1,21 +1,29 @@
 ﻿using System.Numerics;
 using MetaAuth.ContractIntegration.Core.QueryMethods;
 using MetaAuth.ContractIntegration.Core.TransactionMethods;
+using MetaAuth.ContractIntegration.Exceptions;
 using MetaAuth.Metamask.Ethereum;
 using Nethereum.Contracts.ContractHandlers;
 using Nethereum.RPC.Eth.DTOs;
+using Nethereum.Util;
 using Nethereum.Web3;
 
 namespace MetaAuth.ContractIntegration.Contracts;
 
-public class MetaAuth : IContract
+public class MetaAuthContract : IContract
 {
     public Web3 Web3 { get; set; }
     public ContractHandler ContractHandler { get; set; }
 
-    public MetaAuth(IEthereumHostProvider hostProvider, string contractAddress)
+    public MetaAuthContract(IEthereumHostProvider hostProvider, string contractAddress)
     {
         Web3 = hostProvider.GetWeb3();
+        ContractHandler = Web3.Eth.GetContractHandler(contractAddress);
+    }
+
+    public MetaAuthContract(Web3 web3, string contractAddress)
+    {
+        Web3 = web3;
         ContractHandler = Web3.Eth.GetContractHandler(contractAddress);
     }
 
@@ -58,7 +66,7 @@ public class MetaAuth : IContract
 
         return await ContractHandler.SendRequestAsync(burnFunction);
     }
-
+    
     public async Task<string> PauseRequestAsync()
     {
         var pauseFunction = new PauseFunction();
@@ -73,13 +81,23 @@ public class MetaAuth : IContract
 
     public async Task<TransactionReceipt> SafeMintRequestAsync(string to, string uri)
     {
-        var safeMintFunction = new SafeMintFunction()
+        try
         {
-            To = to,
-            Uri = uri
-        };
+            var safeMintFunction = new SafeMintFunction()
+            {
+                To = to,
+                Uri = uri
+            };
 
-        return await ContractHandler.SendRequestAndWaitForReceiptAsync(safeMintFunction);
+            safeMintFunction.Gas = await ContractHandler.EstimateGasAsync(safeMintFunction);
+            safeMintFunction.GasPrice = Web3.Convert.ToWei(25, UnitConversion.EthUnit.Gwei);
+
+            return await ContractHandler.SendRequestAndWaitForReceiptAsync(safeMintFunction);
+        }
+        catch (Exception e)
+        {
+            throw new ContractException($"Error occured while minting NFT | {e.Message} | {e.StackTrace}");
+        }
     }
 
     public async Task<string> UpdateTokenUriRequestAsync(BigInteger tokenId, string uri)
