@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>MetaAuth</id>
+    <version>1.0.0</version>
+    <title>MetaAuth</title>
+    <authors>PiotrApriasz</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <!-- <icon>icon.png</icon> -->
+    <description>MetaAuth library for decentralized authentication with blazor web apps.</description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <copyright>no</copyright>
+    <tags>Blockchain Authentication</tags>
+  </metadata>
+</package>

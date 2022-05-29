@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "dba01de5-ca2f-44ed-9a7a-d420b52e9176": {
+      "ProjectGuid": "dba01de5-ca2f-44ed-9a7a-d420b52e9176",
+      "DisplayName": "MetaAuth.MTA",
+      "ColorIndex": 0
+    },
+    "e60f640a-5779-4233-9246-678318235129": {
+      "ProjectGuid": "e60f640a-5779-4233-9246-678318235129",
+      "DisplayName": "MetaAuth.Metamask.Blazor",
+      "ColorIndex": 1
+    },
+    "0b78b850-e902-4900-a178-58c7bfa2ac1b": {
+      "ProjectGuid": "0b78b850-e902-4900-a178-58c7bfa2ac1b",
+      "DisplayName": "MetaAuth.BlazorTest",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}

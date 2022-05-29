@@ -10,6 +10,10 @@
       <PackageReference Include="Nethereum.Signer.EIP712" Version="4.4.1" />
       <PackageReference Include="Nethereum.StandardNonFungibleTokenERC721" Version="4.4.1" />
       <PackageReference Include="Nethereum.Web3" Version="4.4.1" />
+      <PackageReference Include="NuGet.CommandLine" Version="6.2.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
     <ItemGroup>

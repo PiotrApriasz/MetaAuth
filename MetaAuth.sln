@@ -1,16 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.Metamask.Blazor", "MetaAuth.Metamask.Blazor\MetaAuth.Metamask.Blazor.csproj", "{E60F640A-5779-4233-9246-678318235129}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Metamask.Blazor", "MetaAuth.Metamask.Blazor\MetaAuth.Metamask.Blazor.csproj", "{E60F640A-5779-4233-9246-678318235129}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.ContractIntegration", "MetaAuth.ContractIntegration\MetaAuth.ContractIntegration.csproj", "{19B9A15C-0BC4-4123-B6FC-57D163B4235D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.ContractIntegration", "MetaAuth.ContractIntegration\MetaAuth.ContractIntegration.csproj", "{19B9A15C-0BC4-4123-B6FC-57D163B4235D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.Metamask", "MetaAuth.Metamask\MetaAuth.Metamask.csproj", "{455BA368-FE10-460E-94AF-54DEC436D3CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Metamask", "MetaAuth.Metamask\MetaAuth.Metamask.csproj", "{455BA368-FE10-460E-94AF-54DEC436D3CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.Utils", "MetaAuth.Utils\MetaAuth.Utils.csproj", "{5D3C1DD0-6F6E-4980-9A44-2597B23B8930}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Utils", "MetaAuth.Utils\MetaAuth.Utils.csproj", "{5D3C1DD0-6F6E-4980-9A44-2597B23B8930}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.Test", "MetaAuth.Test\MetaAuth.Test.csproj", "{02E76816-B2A2-42E7-9DD1-7A79E05F740F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Test", "MetaAuth.Test\MetaAuth.Test.csproj", "{02E76816-B2A2-42E7-9DD1-7A79E05F740F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.MTA", "MetaAuth.MTA\MetaAuth.MTA.csproj", "{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.MTA", "MetaAuth.MTA\MetaAuth.MTA.csproj", "{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.BlazorTest", "MetaAuth.BlazorTest\MetaAuth.BlazorTest.csproj", "{0B78B850-E902-4900-A178-58C7BFA2AC1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +47,15 @@ Global
 		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B78B850-E902-4900-A178-58C7BFA2AC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B78B850-E902-4900-A178-58C7BFA2AC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B78B850-E902-4900-A178-58C7BFA2AC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B78B850-E902-4900-A178-58C7BFA2AC1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0BCAF733-6AC7-45E7-AE5F-A2B3BD32FB2C}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,15 @@
+﻿@inject NavigationManager _myNavigationManager
+@inject IEthereumHostProvider _metamaskHostProvider;
+@inject NethereumAuthenticator  _nethereumAuthenticator;
+@inject IJSRuntime jsRuntime;
+@using MetaAuth.Metamask.Blazor
+@using MetaAuth.Metamask.Ethereum
+
+@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
+<Metamask />
+<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor!</MudText>
+<MudAlert Severity="Severity.Normal">You can find documentation and examples on our website here: <MudLink Href="https://mudblazor.com" Typo="Typo.body2" Color="Color.Inherit"><b>www.mudblazor.com</b></MudLink></MudAlert>

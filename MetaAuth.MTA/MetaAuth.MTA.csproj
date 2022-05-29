@@ -4,7 +4,21 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AssemblyName>MetaAuth</AssemblyName>
+        <Company>Piotr Apriasz</Company>
+        <Description>MetaAuth library for decentralized authentication with blazor web apps. </Description>
+        <PackageProjectUrl></PackageProjectUrl>
+        <RepositoryUrl>https://github.com/PiotrApriasz/MetaAuth</RepositoryUrl>
+        <Authors>Piotr Apriasz</Authors>
+        <PackageId>MetaAuth.MTA</PackageId>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NuGet.CommandLine" Version="6.2.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MetaAuth.ContractIntegration\MetaAuth.ContractIntegration.csproj" />
