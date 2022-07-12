@@ -5,6 +5,6 @@ namespace MetaAuth.ContractIntegration.Contracts;
 
 public interface IContract
 {
-    public Web3 Web3 { get; set; }
+    public IWeb3 Web3 { get; set; }
     public ContractHandler ContractHandler { get; set; }
 }

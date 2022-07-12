@@ -1,9 +1,9 @@
 ﻿using System.Net.Http.Headers;
 using System.Text;
-using MetaAuth.Utils.IPFS.Entities;
+using MetaAuth.Logic.IPFS.Entities;
 using Newtonsoft.Json;
 
-namespace MetaAuth.Utils.IPFS;
+namespace MetaAuth.Logic.IPFS;
 
 internal class IpfsUploader<T>
     where T : MetaAuthMetadata

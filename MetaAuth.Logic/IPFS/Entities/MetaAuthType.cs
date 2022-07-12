@@ -1,4 +1,4 @@
-﻿namespace MetaAuth.Utils.IPFS.Entities;
+﻿namespace MetaAuth.Logic.IPFS.Entities;
 
 public enum MetaAuthType
 {

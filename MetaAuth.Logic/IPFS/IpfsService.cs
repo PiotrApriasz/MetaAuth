@@ -1,8 +1,8 @@
 ﻿using Ipfs.Http;
-using MetaAuth.Utils.Exceptions;
-using MetaAuth.Utils.IPFS.Entities;
+using MetaAuth.Logic.Exceptions;
+using MetaAuth.Logic.IPFS.Entities;
 
-namespace MetaAuth.Utils.IPFS;
+namespace MetaAuth.Logic.IPFS;
 
 public class IpfsService<T> : IIpfsService<T>
     where T : MetaAuthMetadata

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MetaAuth.Utils.IPFS.Entities;
+namespace MetaAuth.Logic.IPFS.Entities;
 
 /// <summary>
 /// Base class for storing user data on IPFS server.

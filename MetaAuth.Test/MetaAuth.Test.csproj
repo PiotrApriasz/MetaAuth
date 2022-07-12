@@ -28,7 +28,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MetaAuth.ContractIntegration\MetaAuth.ContractIntegration.csproj" />
-      <ProjectReference Include="..\MetaAuth.Utils\MetaAuth.Utils.csproj" />
+      <ProjectReference Include="..\MetaAuth.Logic\MetaAuth.Logic.csproj" />
     </ItemGroup>
 
 </Project>

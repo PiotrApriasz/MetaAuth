@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.ContractIntegratio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Metamask", "MetaAuth.Metamask\MetaAuth.Metamask.csproj", "{455BA368-FE10-460E-94AF-54DEC436D3CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Utils", "MetaAuth.Utils\MetaAuth.Utils.csproj", "{5D3C1DD0-6F6E-4980-9A44-2597B23B8930}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Logic", "MetaAuth.Logic\MetaAuth.Logic.csproj", "{5D3C1DD0-6F6E-4980-9A44-2597B23B8930}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Test", "MetaAuth.Test\MetaAuth.Test.csproj", "{02E76816-B2A2-42E7-9DD1-7A79E05F740F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.MTA", "MetaAuth.MTA\MetaAuth.MTA.csproj", "{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.API", "MetaAuth.API\MetaAuth.API.csproj", "{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.MtFunction", "MetaAuth.MtFunction\MetaAuth.MtFunction.csproj", "{2F470FF2-BE2A-452B-8E5F-AD77A3246454}"
 EndProject

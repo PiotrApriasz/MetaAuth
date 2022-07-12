@@ -1,4 +1,5 @@
 using MetaAuth.Client;
+using MetaAuth.Logic.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -25,6 +26,16 @@ builder.Services.AddSingleton(services =>
     var selectedHostProvider = new SelectedEthereumHostProviderService();
     selectedHostProvider.SetSelectedEthereumHostProvider(metamaskHostProvider);
     return selectedHostProvider;
+});
+
+builder.Services.AddScoped<ITokenService>(services =>
+{
+    var selectedEthereumHost = services.GetService<SelectedEthereumHostProviderService>();
+    if (selectedEthereumHost == null)
+        throw new NullReferenceException("Service is unable to connect with web3 provider");
+    var web3 = selectedEthereumHost.SelectedHost.GetWeb3Async().Result;
+    return new TokenService(web3, builder.Configuration["SmartContractAddress"]!);
+
 });
 
 builder.Services.AddSingleton<AuthenticationStateProvider, EthereumAuthenticationStateProvider>();

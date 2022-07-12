@@ -1,17 +1,17 @@
 ﻿using MetaAuth.Metamask.Ethereum;
-using MetaAuth.Utils;
-using MetaAuth.Utils.Exceptions;
-using MetaAuth.Utils.IPFS;
-using MetaAuth.Utils.IPFS.Entities;
+using MetaAuth.Logic;
+using MetaAuth.Logic.Exceptions;
+using MetaAuth.Logic.IPFS;
+using MetaAuth.Logic.IPFS.Entities;
 using Nethereum.Contracts;
 using Nethereum.StandardNonFungibleTokenERC721.ContractDefinition;
 
-namespace MetaAuth.MTA;
+namespace MetaAuth.API;
 
-public class MetaAuthService<T> : MetaAuthBase
+public class MetaAuthService<T>
     where T : MetaAuthMetadata
 {
-    private readonly IpfsService<T> _ipfsService;
+    /*private readonly IpfsService<T> _ipfsService;
     private readonly NethereumAuthenticator _nethereumAuthenticator;
     
     public MetaAuthService(IEthereumHostProvider hostProvider, HttpClient httpClient) : base(hostProvider)
@@ -61,5 +61,5 @@ public class MetaAuthService<T> : MetaAuthBase
             throw new MetaAuthAuthenticationException("This MetaAuth token is not connected with this web app");
 
         return true;
-    }
+    }*/
 }

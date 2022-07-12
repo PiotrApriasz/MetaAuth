@@ -8,6 +8,7 @@
 @using Nethereum.UI
 @using Nethereum.Blazor
 @using Nethereum.Metamask
+@using MetaAuth.Client.Components
 
 <MudContainer Class="mt-16">
     @if (!_metamasConnected)
@@ -31,7 +32,7 @@
     }
     else
     {
-        <MudText Typo="Typo.h4" Align="Align.Center">You have connected to MetaAuth with account @_selectedAccount</MudText>
+        <MetamaskConnected SelectedAccount="@_selectedAccount" />
     }
     
 </MudContainer>
@@ -39,10 +40,9 @@
 @code
 {
     string? _selectedAccount;
-    int _selectedChainId;
     bool _metamaskAvailable;
     bool _metamasConnected;
-    IEthereumHostProvider _ethereumHostProvider;
+    IEthereumHostProvider _ethereumHostProvider = null!;
 
     protected override void OnInitialized()
     {
@@ -64,10 +64,11 @@
         }
     }
 
-    private async Task HostProvider_SelectedAccountChanged(string account)
+    private Task HostProvider_SelectedAccountChanged(string account)
     {
         _selectedAccount = account;
         StateHasChanged();
+        return Task.CompletedTask;
     }
 
     private async Task EnableEthereumAsync()

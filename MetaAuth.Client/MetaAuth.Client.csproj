@@ -32,9 +32,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Components" />
-      <Folder Include="Services\Metamask" />
+      <Folder Include="Services" />
       <Folder Include="wwwroot\images" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MetaAuth.API\MetaAuth.API.csproj" />
     </ItemGroup>
 
 </Project>

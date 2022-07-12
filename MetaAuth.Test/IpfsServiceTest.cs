@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
-using MetaAuth.Utils.IPFS;
-using MetaAuth.Utils.IPFS.Entities;
+using MetaAuth.Logic.IPFS;
+using MetaAuth.Logic.IPFS.Entities;
 using Moq;
 using Xunit;
 

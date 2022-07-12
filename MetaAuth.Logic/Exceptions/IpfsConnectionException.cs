@@ -1,4 +1,4 @@
-﻿namespace MetaAuth.Utils.Exceptions;
+﻿namespace MetaAuth.Logic.Exceptions;
 
 public class IpfsConnectionException : Exception
 {

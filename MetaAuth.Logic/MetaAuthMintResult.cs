@@ -1,6 +1,6 @@
-﻿using MetaAuth.Utils.IPFS.Entities;
+﻿using MetaAuth.Logic.IPFS.Entities;
 
-namespace MetaAuth.Utils;
+namespace MetaAuth.Logic;
 
 public class MetaAuthMintResult<T>
     where T : MetaAuthMetadata

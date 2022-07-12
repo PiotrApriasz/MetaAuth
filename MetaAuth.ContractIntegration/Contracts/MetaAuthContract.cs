@@ -5,6 +5,7 @@ using MetaAuth.ContractIntegration.Exceptions;
 using MetaAuth.Metamask.Ethereum;
 using Nethereum.Contracts.ContractHandlers;
 using Nethereum.RPC.Eth.DTOs;
+using Nethereum.UI;
 using Nethereum.Util;
 using Nethereum.Web3;
 
@@ -12,16 +13,11 @@ namespace MetaAuth.ContractIntegration.Contracts;
 
 public class MetaAuthContract : IContract
 {
-    public Web3 Web3 { get; set; }
+    public IWeb3 Web3 { get; set; }
     public ContractHandler ContractHandler { get; set; }
+    
 
-    public MetaAuthContract(IEthereumHostProvider hostProvider, string contractAddress)
-    {
-        Web3 = hostProvider.GetWeb3();
-        ContractHandler = Web3.Eth.GetContractHandler(contractAddress);
-    }
-
-    public MetaAuthContract(Web3 web3, string contractAddress)
+    public MetaAuthContract(IWeb3 web3, string contractAddress)
     {
         Web3 = web3;
         ContractHandler = Web3.Eth.GetContractHandler(contractAddress);
@@ -90,7 +86,7 @@ public class MetaAuthContract : IContract
             };
 
             safeMintFunction.Gas = await ContractHandler.EstimateGasAsync(safeMintFunction);
-            safeMintFunction.GasPrice = Web3.Convert.ToWei(25, UnitConversion.EthUnit.Gwei);
+            safeMintFunction.GasPrice = Nethereum.Web3.Web3.Convert.ToWei(25, UnitConversion.EthUnit.Gwei);
 
             return await ContractHandler.SendRequestAndWaitForReceiptAsync(safeMintFunction);
         }

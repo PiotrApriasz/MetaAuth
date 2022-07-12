@@ -1,6 +1,6 @@
-﻿using MetaAuth.Utils.IPFS.Entities;
+﻿using MetaAuth.Logic.IPFS.Entities;
 
-namespace MetaAuth.Utils.IPFS;
+namespace MetaAuth.Logic.IPFS;
 
 public interface IIpfsService<T>
 {

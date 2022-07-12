@@ -1,0 +1,42 @@
+﻿@using MetaAuth.Logic.Services
+@inject ITokenService TokenService
+
+
+<MudText Typo="Typo.h4" Align="Align.Center">Your Metamask account is connected!</MudText>
+<MudCard Class="glass-panel mt-7">
+    <MudCardContent>
+        <MudGrid Justify="Justify.Center" Spacing="5">
+            <MudItem>
+                <MudStack Row="true">
+                    <MudImage Src="images/metamask-fox.svg" Width="70" Height="70"></MudImage>
+                    <MudStack Justify="Justify.Center">
+                        <MudText Typo="Typo.h5" Align="Align.Center">@SelectedAccount</MudText>
+                    </MudStack>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter]
+    public string SelectedAccount { get; set; } = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var result = await TokenService.CheckIfUserHaveTokenAsync(SelectedAccount);
+    }
+}
+
+<style>
+    .glass-panel {
+      color: #fff;
+      margin: 40px auto;
+      background-color: rgba(255,255,255,0.06);
+      width: 700px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      align-content: center;
+      align-items: center;
+    }
+</style>
