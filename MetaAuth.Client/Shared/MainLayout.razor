@@ -1,0 +1,54 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme"/>
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<div class="page-background-class">
+    <MudLayout>
+        <MudAppBar Color="Color.Transparent" Elevation="0">
+            <MudText Typo="Typo.h5" Class="ml-16 mt-16" ><strong>MetaAuth</strong></MudText>
+            <MudSpacer/>
+            <MudLink Href="https://github.com/PiotrApriasz/MetaAuth">
+                <MudIconButton Icon="@Icons.Custom.Brands.GitHub" aria-label="github" Class="mr-16 mt-16"
+                               Size="Size.Large"></MudIconButton>
+            </MudLink>
+        </MudAppBar>
+        <MudMainContent>
+            @Body
+        </MudMainContent>
+    </MudLayout>
+</div>
+
+@code {
+    bool _drawerOpen = true;
+    private bool _isDarkMode = true;
+    private MudTheme _theme = new();
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
+
+<style>
+    .mud-appbar.mud-appbar-fixed-top {
+        position: static;
+    }
+    
+    .page-background-class {
+        background : url(images/background.png) no-repeat center center fixed;
+                        -webkit-background-size: cover;
+                          -moz-background-size: cover;
+                          -o-background-size: cover;
+                          background-size: cover;
+                          min-height: 100%;
+                          top: 0;
+                              bottom:0;
+                              position: fixed;
+                              overflow-y: scroll;
+                              overflow-x: hidden;
+                          width: 100%;
+                          height: auto;
+    }
+</style>

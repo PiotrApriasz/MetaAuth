@@ -15,7 +15,12 @@
       "ProjectGuid": "0b78b850-e902-4900-a178-58c7bfa2ac1b",
       "DisplayName": "MetaAuth.BlazorTest",
       "ColorIndex": 2
+    },
+    "74e9eb42-d68c-43ce-b646-0f8f95f1b7a9": {
+      "ProjectGuid": "74e9eb42-d68c-43ce-b646-0f8f95f1b7a9",
+      "DisplayName": "MetaAuth.BlazorClassicTest",
+      "ColorIndex": 3
     }
   },
-  "NextColorIndex": 3
+  "NextColorIndex": 4
 }

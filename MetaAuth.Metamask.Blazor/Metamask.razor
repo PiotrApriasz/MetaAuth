@@ -47,7 +47,6 @@
         SelectedAccount = await _metamaskHostProvider.EnableProviderAsync();
     }
     
-    // TODO: Implement first authentication with signing message 
     public async Task AuthenticateAsync()
     {
         AuthenticatedAccount = await _nethereumAuthenticator.RequestNewChallengeSignatureAndRecoverAccountAsync();
