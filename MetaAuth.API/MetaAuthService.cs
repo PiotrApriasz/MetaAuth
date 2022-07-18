@@ -1,15 +1,17 @@
 ﻿using MetaAuth.Metamask.Ethereum;
 using MetaAuth.Logic;
+using MetaAuth.Logic.Entities;
+using MetaAuth.Logic.Entities.IPFS;
+using MetaAuth.Logic.Entities.User;
 using MetaAuth.Logic.Exceptions;
 using MetaAuth.Logic.IPFS;
-using MetaAuth.Logic.IPFS.Entities;
 using Nethereum.Contracts;
 using Nethereum.StandardNonFungibleTokenERC721.ContractDefinition;
 
 namespace MetaAuth.API;
 
 public class MetaAuthService<T>
-    where T : MetaAuthMetadata
+    where T : MetaAuthUserData
 {
     /*private readonly IpfsService<T> _ipfsService;
     private readonly NethereumAuthenticator _nethereumAuthenticator;

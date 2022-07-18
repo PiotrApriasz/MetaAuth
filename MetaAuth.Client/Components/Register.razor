@@ -1,0 +1,167 @@
+﻿@using MetaAuth.Logic.Entities.User
+@using FluentValidation
+@using MetaAuth.Client.Validators
+@using Severity = MudBlazor.Severity
+@inject ISnackbar Snackbar
+
+<MudCard Elevation="12" Class="glass-panel-form mt-16 md-16">
+    <MudForm Model="@_userData" @ref="@_form" Validation="@(_dataValidator.ValidateValue)" ValidationDelay="0">
+        <MudCardContent>
+            <MudGrid Justify="Justify.Center" Class="mt-1 mb-2">
+                <MudTextField @bind-Value="_userData.Name"
+                              For="@(() => _userData.Name)"
+                              Immediate="true"
+                              Label="Name"
+                              InputType="InputType.Text"
+                              Style="width: 310px" Class="ml-6 mb-2"/>
+                <MudTextField @bind-Value="_userData.Surname"
+                              For="@(() => _userData.Surname)"
+                              Immediate="true"
+                              Label="Surname"
+                              InputType="InputType.Text"
+                              Style="width: 310px" Class="mb-2"/>
+                <MudDatePicker @bind-Date="_userData.BirthDate"
+                               For="@(() => _userData.BirthDate)"
+                               AutoClose="true"
+                               Label="Birth Date"
+                               Style="width: 310px" Class="ml-6 mb-2" Elevation="12"/>
+                <MudTextField @bind-Value="_userData.Email"
+                              For="@(() => _userData.Email)"
+                              Immediate="true"
+                              Label="Email"
+                              InputType="InputType.Email"
+                              Style="width: 310px" Class="mb-2"/>
+                <MudTextField @bind-Value="_userData.Address.Town"
+                              For="@(() => _userData.Address.Town)"
+                              Immediate="true"
+                              Label="Town"
+                              InputType="InputType.Text"
+                              Style="width: 310px" Class="ml-6 mb-2"/>
+                <MudTextField @bind-Value="_userData.Address.Street"
+                              For="@(() => _userData.Address.Street)"
+                              Immediate="true"
+                              Label="Street"
+                              InputType="InputType.Text"
+                              Style="width: 310px" Class="mb-2"/>
+                <MudTextField @bind-Value="_userData.Address.HomeNumber"
+                              For="@(() => _userData.Address.HomeNumber)"
+                              Immediate="true"
+                              Label="Home Number"
+                              InputType="InputType.Text"
+                              Style="width: 310px" Class="ml-6 mb-2"/>
+                <MudTextField @bind-Value="_userData.Address.FlatNumber"
+                              For="@(() => _userData.Address.FlatNumber)"
+                              Immediate="true"
+                              Label="Flat Number"
+                              InputType="InputType.Text"
+                              Style="width: 310px" Class="mb-2"/>
+                <MudTextField @bind-Value="_userData.Address.PostalCode"
+                              For="@(() => _userData.Address.PostalCode)"
+                              Immediate="true"
+                              Label="Postal Code"
+                              InputType="InputType.Text"
+                              Style="width: 310px" Class="ml-6 mb-2"/>
+                <MudTextField @bind-Value="_userData.Address.Country"
+                              For="@(() => _userData.Address.Country)"
+                              Immediate="true"
+                              Label="Country"
+                              InputType="InputType.Text"
+                              Style="width: 310px" Class="mb-2"/>
+                <MudTextField @bind-Value="_userData.IdCard.IdCardNumber"
+                              For="@(() => _userData.IdCard.IdCardNumber)"
+                              Immediate="true"
+                              Label="Id Card Number"
+                              InputType="InputType.Text"
+                              Style="width: 310px" Class="ml-6 mb-2"/>
+                <MudTextField @bind-Value="_userData.IdCard.PersonalIdNumber"
+                              For="@(() => _userData.IdCard.PersonalIdNumber)"
+                              Immediate="true"
+                              Label="Personal Id Number"
+                              InputType="InputType.Text"
+                              Style="width: 310px" Class="mb-2"/>
+            </MudGrid>
+        </MudCardContent>
+    </MudForm>
+    <MudCardActions>
+        <MudGrid Justify="Justify.Center" Class="mt-2 mb-5">
+            <MudStack Row="false">
+                @if (_imgSrc is not null)
+                {
+                    <MudImage Src="@_imgSrc" Elevation="12" Alt="User Photo" Class="rounded-lg" 
+                              Width="125" Height="125"/>
+                }
+                <InputFile id="photoInput" OnChange="UploadFiles" hidden accept=".jpg, .jpeg, .png"/>
+                <MudButton HtmlTag="label"
+                           Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Filled.CloudUpload"
+                           for="photoInput" Class="upload-bt md-4">
+                    Upload your profile photo
+                </MudButton>
+                <MudButton Class="glass-button" Variant="Variant.Filled" Size="Size.Large" OnClick="@(async () => await Submit())">Register MetaAuth</MudButton>
+            </MudStack>
+        </MudGrid>
+    </MudCardActions>
+</MudCard>
+
+@code {
+    MudForm _form;
+    MetaAuthUserData _userData = new();
+    MetaAuthUserDataValidator _dataValidator = new();
+    IBrowserFile? _userPhoto;
+    string? _base64Photo;
+    string? _imgSrc;
+
+    private async Task Submit()
+    {
+        await _form.Validate();
+
+        if (_form.IsValid)
+        {
+            
+        }
+    }
+
+    private async Task UploadFiles(InputFileChangeEventArgs e)
+    {
+        const long maxPhotoSize = 1024 * 1024;
+        
+        _userPhoto = e.File;
+        
+        var readStream = _userPhoto.OpenReadStream(maxPhotoSize);
+        var buf = new byte[readStream.Length];
+        var ms = new MemoryStream(buf);
+        await readStream.CopyToAsync(ms);
+        var photoBuffer = ms.ToArray();
+        _base64Photo = Convert.ToBase64String(photoBuffer);
+        _imgSrc = $"data:image/jpg;base64,{_base64Photo}";
+        
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+        //Snackbar.Add($"Files with {entry.Size} bytes size are not allowed", Severity.Error);
+        //Snackbar.Add($"Files starting with letter {entry.Name[..1]} are not recommended", Severity.Warning);
+        //Snackbar.Add($"This file has the extension {_userPhoto.Name.Split(".").Last()}", Severity.Warning);
+    }
+}
+
+<style>
+    .glass-panel-form {
+      color: #fff;
+            margin: 40px auto;
+            background-color: rgba(255,255,255,0.06);
+            width: 700px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            align-content: center;
+            align-items: center;
+    }
+    
+    .mud-input {
+       color: white !important;
+    }
+    
+    .upload-bt {
+        border-radius: 10px !important;
+    }
+    
+   
+</style>

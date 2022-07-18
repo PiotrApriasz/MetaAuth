@@ -3,19 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Metamask.Blazor", "MetaAuth.Metamask.Blazor\MetaAuth.Metamask.Blazor.csproj", "{E60F640A-5779-4233-9246-678318235129}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.ContractIntegration", "MetaAuth.ContractIntegration\MetaAuth.ContractIntegration.csproj", "{19B9A15C-0BC4-4123-B6FC-57D163B4235D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Metamask", "MetaAuth.Metamask\MetaAuth.Metamask.csproj", "{455BA368-FE10-460E-94AF-54DEC436D3CF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Logic", "MetaAuth.Logic\MetaAuth.Logic.csproj", "{5D3C1DD0-6F6E-4980-9A44-2597B23B8930}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Test", "MetaAuth.Test\MetaAuth.Test.csproj", "{02E76816-B2A2-42E7-9DD1-7A79E05F740F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.API", "MetaAuth.API\MetaAuth.API.csproj", "{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.MtFunction", "MetaAuth.MtFunction\MetaAuth.MtFunction.csproj", "{2F470FF2-BE2A-452B-8E5F-AD77A3246454}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.Client", "MetaAuth.Client\MetaAuth.Client.csproj", "{853AD8C5-3E03-4CE8-847F-D9BA37DFC068}"
 EndProject
@@ -25,18 +17,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E60F640A-5779-4233-9246-678318235129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E60F640A-5779-4233-9246-678318235129}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E60F640A-5779-4233-9246-678318235129}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E60F640A-5779-4233-9246-678318235129}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19B9A15C-0BC4-4123-B6FC-57D163B4235D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19B9A15C-0BC4-4123-B6FC-57D163B4235D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19B9A15C-0BC4-4123-B6FC-57D163B4235D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19B9A15C-0BC4-4123-B6FC-57D163B4235D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{455BA368-FE10-460E-94AF-54DEC436D3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{455BA368-FE10-460E-94AF-54DEC436D3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{455BA368-FE10-460E-94AF-54DEC436D3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{455BA368-FE10-460E-94AF-54DEC436D3CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D3C1DD0-6F6E-4980-9A44-2597B23B8930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D3C1DD0-6F6E-4980-9A44-2597B23B8930}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D3C1DD0-6F6E-4980-9A44-2597B23B8930}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,14 +29,6 @@ Global
 		{02E76816-B2A2-42E7-9DD1-7A79E05F740F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02E76816-B2A2-42E7-9DD1-7A79E05F740F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02E76816-B2A2-42E7-9DD1-7A79E05F740F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBA01DE5-CA2F-44ED-9A7A-D420B52E9176}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2F470FF2-BE2A-452B-8E5F-AD77A3246454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F470FF2-BE2A-452B-8E5F-AD77A3246454}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F470FF2-BE2A-452B-8E5F-AD77A3246454}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F470FF2-BE2A-452B-8E5F-AD77A3246454}.Release|Any CPU.Build.0 = Release|Any CPU
 		{853AD8C5-3E03-4CE8-847F-D9BA37DFC068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{853AD8C5-3E03-4CE8-847F-D9BA37DFC068}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{853AD8C5-3E03-4CE8-847F-D9BA37DFC068}.Release|Any CPU.ActiveCfg = Release|Any CPU

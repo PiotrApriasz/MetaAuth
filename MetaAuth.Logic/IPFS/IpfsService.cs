@@ -1,11 +1,13 @@
 ﻿using Ipfs.Http;
+using MetaAuth.Logic.Entities;
+using MetaAuth.Logic.Entities.IPFS;
+using MetaAuth.Logic.Entities.User;
 using MetaAuth.Logic.Exceptions;
-using MetaAuth.Logic.IPFS.Entities;
 
 namespace MetaAuth.Logic.IPFS;
 
 public class IpfsService<T> : IIpfsService<T>
-    where T : MetaAuthMetadata
+    where T : MetaAuthUserData
 {
     private readonly string _userName;
     private readonly string _password;

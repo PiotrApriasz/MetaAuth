@@ -1,10 +1,12 @@
-﻿using MetaAuth.Logic.IPFS.Entities;
+﻿using MetaAuth.Logic.Entities;
+using MetaAuth.Logic.Entities.IPFS;
+using MetaAuth.Logic.Entities.User;
 using Newtonsoft.Json;
 
 namespace MetaAuth.Logic.IPFS;
 
 public class IpfsDownloader<T>
-    where T : MetaAuthMetadata
+    where T : MetaAuthUserData
 {
     private string _cid;
     private readonly HttpClient _httpClient;

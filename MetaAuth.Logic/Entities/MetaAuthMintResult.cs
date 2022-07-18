@@ -1,9 +1,10 @@
-﻿using MetaAuth.Logic.IPFS.Entities;
+﻿using MetaAuth.Logic.Entities.IPFS;
+using MetaAuth.Logic.Entities.User;
 
-namespace MetaAuth.Logic;
+namespace MetaAuth.Logic.Entities;
 
 public class MetaAuthMintResult<T>
-    where T : MetaAuthMetadata
+    where T : MetaAuthUserData
 {
     public int TokenId { get; set; }
     public string OwnerAddress { get; set; }

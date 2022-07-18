@@ -3,7 +3,7 @@
 
 
 <MudText Typo="Typo.h4" Align="Align.Center">Your Metamask account is connected!</MudText>
-<MudCard Class="glass-panel mt-7">
+<MudCard Elevation="12" Class="glass-panel mt-7">
     <MudCardContent>
         <MudGrid Justify="Justify.Center" Spacing="5">
             <MudItem>
@@ -18,13 +18,40 @@
     </MudCardContent>
 </MudCard>
 
+@if (!_userHaveToken)
+{
+    if (!_register)
+    {
+        <MudCard Elevation="12" Class="glass-panel mt-16">
+            <MudCardContent>
+                <MudText Typo="Typo.h6" Align="Align.Center">You don't have MetaAuth token. Would you like to create one?</MudText>
+                <MudGrid Justify="Justify.Center" Class="mt-7 mb-7">
+                    <MudButton Class="glass-button" Variant="Variant.Filled" Size="Size.Large" OnClick="EnableRegister">Create MetaAuth Token</MudButton>
+                </MudGrid>
+            </MudCardContent>
+        </MudCard>
+    }
+    else
+    {
+        <Register />
+    }
+}
+
 @code {
     [Parameter]
     public string SelectedAccount { get; set; } = null!;
 
+    bool _userHaveToken;
+    bool _register;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var result = await TokenService.CheckIfUserHaveTokenAsync(SelectedAccount);
+        _userHaveToken = await TokenService.CheckIfUserHaveTokenAsync(SelectedAccount);
+    }
+
+    private void EnableRegister()
+    {
+        _register = true;
     }
 }
 
@@ -39,4 +66,5 @@
       align-content: center;
       align-items: center;
     }
+   
 </style>

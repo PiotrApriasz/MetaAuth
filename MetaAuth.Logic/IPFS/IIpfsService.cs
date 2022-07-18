@@ -1,4 +1,4 @@
-﻿using MetaAuth.Logic.IPFS.Entities;
+﻿using MetaAuth.Logic.Entities.IPFS;
 
 namespace MetaAuth.Logic.IPFS;
 

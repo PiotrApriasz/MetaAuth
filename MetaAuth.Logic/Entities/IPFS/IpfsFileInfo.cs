@@ -1,4 +1,4 @@
-﻿namespace MetaAuth.Logic.IPFS.Entities;
+﻿namespace MetaAuth.Logic.Entities.IPFS;
 
 public class IpfsFileInfo
 {

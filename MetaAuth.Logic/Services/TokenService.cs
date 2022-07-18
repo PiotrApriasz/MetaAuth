@@ -1,4 +1,5 @@
-﻿using MetaAuth.Metamask.Ethereum;
+﻿using MetaAuth.Logic.Entities;
+using MetaAuth.Metamask.Ethereum;
 using Nethereum.Web3;
 
 namespace MetaAuth.Logic.Services;

@@ -1,9 +1,7 @@
 ﻿using MetaAuth.ContractIntegration.Contracts;
-using MetaAuth.Metamask.Ethereum;
-using Nethereum.UI;
 using Nethereum.Web3;
 
-namespace MetaAuth.Logic;
+namespace MetaAuth.Logic.Entities;
 
  public abstract class MetaAuthBase
 {

@@ -3,9 +3,11 @@ using NBitcoin.Secp256k1;
 using Nethereum.Web3;
 using Nethereum.Web3.Accounts;
 using MetaAuth.ContractIntegration.Contracts;
+using MetaAuth.Logic.Entities;
+using MetaAuth.Logic.Entities.IPFS;
+using MetaAuth.Logic.Entities.User;
 using MetaAuth.Metamask.Metamask;
 using MetaAuth.Logic.IPFS;
-using MetaAuth.Logic.IPFS.Entities;
 using Moq;
 using Nethereum.Util;
 using Xunit;
@@ -21,14 +23,14 @@ public class MetaAuthContractTest
         return new Web3(account, infuraUrl);
     }
     
-    private MetaAuthMetadata GetMetadata() =>
+    private MetaAuthUserData GetMetadata() =>
         new()
         {
-            Type = MetaAuthType.UserData,
-            Description = "This is second test ipfs data for testing IpfsService in MetaAuth app",
-            Username = "testuser",
+            //Type = MetaAuthType.UserData,
+            //Description = "This is second test ipfs data for testing IpfsService in MetaAuth app",
+            //Username = "testuser",
             IssueTime = 123456789,
-            WebAppAddress = "testTest.com"
+            //WebAppAddress = "testTest.com"
         };
 
     private HttpClient MockHttpClient()
@@ -40,7 +42,7 @@ public class MetaAuthContractTest
         return mockFactory.Object.CreateClient();
     }
 
-    private IpfsService<MetaAuthMetadata> GetIpfsSerrvice() =>
+    private IpfsService<MetaAuthUserData> GetIpfsSerrvice() =>
         new ("28k2jK8Gu4h3ZhNbLclNlI0qx81", "c0903b857c2818539f1b27c308fd9bf7",
             "https://ipfs.infura.io:5001", "https://meta-auth.infura-ipfs.io", MockHttpClient());
     

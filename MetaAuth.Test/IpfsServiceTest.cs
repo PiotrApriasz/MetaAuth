@@ -1,6 +1,8 @@
 ﻿using System.Net.Http;
+using MetaAuth.Logic.Entities;
+using MetaAuth.Logic.Entities.IPFS;
+using MetaAuth.Logic.Entities.User;
 using MetaAuth.Logic.IPFS;
-using MetaAuth.Logic.IPFS.Entities;
 using Moq;
 using Xunit;
 
@@ -8,14 +10,14 @@ namespace MetaAuth.Test;
 
 public class IpfsServiceTest
 {
-    private static MetaAuthMetadata GetMetadata() =>
+    private static MetaAuthUserData GetMetadata() =>
         new()
         {
-            Type = MetaAuthType.UserData,
-            Description = "This is test ipfs data for testing IpfsService in MetaAuth app",
-            Username = "testuser",
+            //Type = MetaAuthType.UserData,
+            //Description = "This is test ipfs data for testing IpfsService in MetaAuth app",
+            //Username = "testuser",
             IssueTime = 123456,
-            WebAppAddress = "test.com"
+            //WebAppAddress = "test.com"
         };
 
     private HttpClient MockHttpClient()
@@ -27,7 +29,7 @@ public class IpfsServiceTest
         return mockFactory.Object.CreateClient();
     }
 
-    private IpfsService<MetaAuthMetadata> GetIpfsSerrvice() =>
+    private IpfsService<MetaAuthUserData> GetIpfsSerrvice() =>
         new("28k2jK8Gu4h3ZhNbLclNlI0qx81", "c0903b857c2818539f1b27c308fd9bf7",
             "https://ipfs.infura.io:5001", "https://meta-auth.infura-ipfs.io", MockHttpClient());
 
