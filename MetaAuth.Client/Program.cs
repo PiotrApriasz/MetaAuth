@@ -1,4 +1,6 @@
 using MetaAuth.Client;
+using MetaAuth.Logic.Entities.IPFS;
+using MetaAuth.Logic.IPFS;
 using MetaAuth.Logic.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -13,7 +15,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped(sp => new HttpClient());
 builder.Services.AddMudServices();
 
 builder.Services.AddSingleton<IMetamaskInterop, MetamaskBlazorInterop>();
@@ -36,6 +38,30 @@ builder.Services.AddScoped<ITokenService>(services =>
     var web3 = selectedEthereumHost.SelectedHost.GetWeb3Async().Result;
     return new TokenService(web3, builder.Configuration["SmartContractAddress"]!);
 
+});
+
+builder.Services.AddScoped<IIpfsService>(services =>
+{
+    var ipfsConfig = new IpfsConfig
+    {
+        IpfsGateway = builder.Configuration["IPFSGateway"]!,
+        IpfsKey = builder.Configuration["IPFSKey"]!,
+        IpfsProjectId = builder.Configuration["IPFSId"]!,
+        IpfsServiceBaseUrl = builder.Configuration["IPFSServiceBaseURL"]!
+    };
+
+    return new IpfsService(ipfsConfig, services.GetService<HttpClient>()!);
+});
+
+builder.Services.AddScoped<IAuthenticationService>(services =>
+{
+    var selectedEthereumHost = services.GetService<SelectedEthereumHostProviderService>();
+    if (selectedEthereumHost == null)
+        throw new NullReferenceException("Service is unable to connect with web3 provider");
+    var web3 = selectedEthereumHost.SelectedHost.GetWeb3Async().Result;
+
+    return new AuthenticationService(web3,
+        builder.Configuration["SmartContractAddress"]!, services.GetService<IIpfsService>()!);
 });
 
 builder.Services.AddSingleton<AuthenticationStateProvider, EthereumAuthenticationStateProvider>();

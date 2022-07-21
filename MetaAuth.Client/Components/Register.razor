@@ -1,8 +1,12 @@
 ﻿@using MetaAuth.Logic.Entities.User
 @using FluentValidation
 @using MetaAuth.Client.Validators
+@using MetaAuth.Logic.Entities
+@using MetaAuth.Logic.Services
 @using Severity = MudBlazor.Severity
+
 @inject ISnackbar Snackbar
+@inject IAuthenticationService AuthenticationService
 
 <MudCard Elevation="12" Class="glass-panel-form mt-16 md-16">
     <MudForm Model="@_userData" @ref="@_form" Validation="@(_dataValidator.ValidateValue)" ValidationDelay="0">
@@ -105,20 +109,61 @@
 </MudCard>
 
 @code {
+    [Parameter]
+    public string SelectedAccount { get; set; }
+    
     MudForm _form;
-    MetaAuthUserData _userData = new();
+    MetaAuthUserData _userData;
     MetaAuthUserDataValidator _dataValidator = new();
     IBrowserFile? _userPhoto;
-    string? _base64Photo;
+    MetaAuthMintResult? _mintResult;
+    byte[]? _photoBytes;
     string? _imgSrc;
+
+    protected override void OnInitialized()
+    {
+        _userData = new MetaAuthUserData()
+        {
+            Name = "Piotr",
+            Surname = "Apriasz",
+            BirthDate = DateTime.Now,
+            Address = new Address()
+            {
+                Country = "Poland",
+                FlatNumber = "12",
+                HomeNumber = "128",
+                Street = "Wojnarowa",
+                Town = "Korzenna",
+                PostalCode = "33-322"
+            },
+            Email = "piotrekapriasz@gmail.com",
+            IdCard = new IdCard()
+            {
+                IdCardNumber = "CBT-23432",
+                PersonalIdNumber = "99121709174",
+
+            }
+        };
+    }
 
     private async Task Submit()
     {
         await _form.Validate();
 
-        if (_form.IsValid)
+        if (_form.IsValid && (_imgSrc is not null && _photoBytes is not null))
         {
-            
+            _userData.IssueTime = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+            _mintResult = await AuthenticationService.SafeMint(_userData, _photoBytes, SelectedAccount);
+
+            Console.WriteLine(AuthenticationService);
+
+            Console.WriteLine(_mintResult.TokenId);
+            Console.WriteLine(_mintResult.OwnerAddress);
+            Console.WriteLine(_mintResult.MetadataCid);
+            Console.WriteLine(_mintResult.Metadata.Name);
+            Console.WriteLine(_mintResult.Metadata.Surname);
+            Console.WriteLine(_mintResult.Metadata.IssueTime);
+            Console.WriteLine(_mintResult.Metadata.Base64PhotoCode);
         }
     }
 
@@ -132,11 +177,13 @@
         var buf = new byte[readStream.Length];
         var ms = new MemoryStream(buf);
         await readStream.CopyToAsync(ms);
-        var photoBuffer = ms.ToArray();
-        _base64Photo = Convert.ToBase64String(photoBuffer);
-        _imgSrc = $"data:image/jpg;base64,{_base64Photo}";
+        _photoBytes = ms.ToArray();
+        var base64Photo = Convert.ToBase64String(_photoBytes);
+        _userData.Base64PhotoCode = base64Photo;
+        _imgSrc = $"data:image/jpg;base64,{base64Photo}";
         
         Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+        //TODO: Add checking if user upload good extension
         //Snackbar.Add($"Files with {entry.Size} bytes size are not allowed", Severity.Error);
         //Snackbar.Add($"Files starting with letter {entry.Name[..1]} are not recommended", Severity.Warning);
         //Snackbar.Add($"This file has the extension {_userPhoto.Name.Split(".").Last()}", Severity.Warning);

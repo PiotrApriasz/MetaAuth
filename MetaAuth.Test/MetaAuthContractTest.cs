@@ -6,7 +6,6 @@ using MetaAuth.ContractIntegration.Contracts;
 using MetaAuth.Logic.Entities;
 using MetaAuth.Logic.Entities.IPFS;
 using MetaAuth.Logic.Entities.User;
-using MetaAuth.Metamask.Metamask;
 using MetaAuth.Logic.IPFS;
 using Moq;
 using Nethereum.Util;
@@ -42,7 +41,7 @@ public class MetaAuthContractTest
         return mockFactory.Object.CreateClient();
     }
 
-    private IpfsService<MetaAuthUserData> GetIpfsSerrvice() =>
+    private IpfsService GetIpfsSerrvice() =>
         new ("28k2jK8Gu4h3ZhNbLclNlI0qx81", "c0903b857c2818539f1b27c308fd9bf7",
             "https://ipfs.infura.io:5001", "https://meta-auth.infura-ipfs.io", MockHttpClient());
     

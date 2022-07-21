@@ -30,11 +30,7 @@ public class MetaAuthUserDataValidator : AbstractValidator<MetaAuthUserData>
         RuleFor(x => x.Address.Town)
             .NotEmpty()
             .WithMessage("Field Town should not be empty");
-        
-        RuleFor(x => x.Address.Street)
-            .NotEmpty()
-            .WithMessage("Field Street should not be empty");
-        
+
         RuleFor(x => x.Address.HomeNumber)
             .NotEmpty()
             .WithMessage("Field Home Number should not be empty");

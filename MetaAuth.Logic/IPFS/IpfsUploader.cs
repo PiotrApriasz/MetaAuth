@@ -7,8 +7,7 @@ using Newtonsoft.Json;
 
 namespace MetaAuth.Logic.IPFS;
 
-internal class IpfsUploader<T>
-    where T : MetaAuthUserData
+internal class IpfsUploader
 {
     private readonly AuthenticationHeaderValue _authHeaderValue;
     private readonly HttpClient _httpClient;
@@ -25,7 +24,7 @@ internal class IpfsUploader<T>
         _authHeaderValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
     }
     
-    public async Task<IpfsFileInfo> AddObjectAsJson(T objectToSerialise, string fileName, bool pin = true)
+    public async Task<IpfsFileInfo> AddObjectAsJson(MetaAuthUserData objectToSerialise, string fileName, bool pin = true)
     {
         await using var ms = new MemoryStream();
         var serializer = new JsonSerializer();
@@ -35,13 +34,6 @@ internal class IpfsUploader<T>
         ms.Position = 0;
         var node = await AddAsync(ms.ToArray(), fileName, true);
         return node;
-    }
-    
-    public Task<IpfsFileInfo> AddFileAsync(string path, bool pin = true)
-    {
-        var fileBytes = File.ReadAllBytes(path);
-        var fileName = Path.GetFileName(path);
-        return AddAsync(fileBytes, fileName, pin);
     }
 
     private async Task<IpfsFileInfo> AddAsync(byte[] fileBytes, string fileName, bool pin = true)

@@ -1,21 +1,27 @@
-﻿namespace MetaAuth.Logic.Services;
+﻿using MetaAuth.Logic.Entities;
+using MetaAuth.Logic.Entities.IPFS;
+using MetaAuth.Logic.Entities.User;
+using MetaAuth.Logic.IPFS;
+using Nethereum.Contracts;
+using Nethereum.Contracts.Standards.ERC721.ContractDefinition;
+using Nethereum.UI;
+using Nethereum.Web3;
 
-public class AuthenticationService
+namespace MetaAuth.Logic.Services;
+
+public class AuthenticationService : MetaAuthBase, IAuthenticationService
 {
-    /*private readonly IpfsService<T> _ipfsService;
-    private readonly NethereumAuthenticator _nethereumAuthenticator;
-    
-    public MetaAuthService(IEthereumHostProvider hostProvider, HttpClient httpClient) : base(hostProvider)
+    private readonly IIpfsService _ipfsService;
+
+    public AuthenticationService(IWeb3 hostProvider, string address, IIpfsService ipfsService) : base(hostProvider, address)
     {
-        _ipfsService = new IpfsService<T>(MetaAuthSettings.IpfsUsername, MetaAuthSettings.IpfsPassword,
-            MetaAuthSettings.IpfsServiceBaseUrl, MetaAuthSettings.IpfsGateway, httpClient);
-        _nethereumAuthenticator = new NethereumAuthenticator(hostProvider);
+        _ipfsService = ipfsService;
     }
 
-    public async Task<MetaAuthMintResult<T>> SafeMint(T metadata, string userMetamaskAddress)
+    public async Task<MetaAuthMintResult> SafeMint(MetaAuthUserData metadata, byte[] photoBytes, string userMetamaskAddress)
     {
         var ipfsFileInfo = await _ipfsService.AddNftMetadataToIpfsAsync(metadata, 
-            $"{MetaAuthSettings.MetadataBaseName}{metadata.Guid}-{metadata.Username}.json");
+            $"metaauth-{metadata.IssueTime}-{metadata.Name}{metadata.Surname}.json");
 
         var mintReceipt = await MetaAuthInstance.SafeMintRequestAsync(userMetamaskAddress,
             ipfsFileInfo.Hash);
@@ -26,11 +32,11 @@ public class AuthenticationService
         var tokenId = (int)transferEvent.Event.TokenId;
         var owner = transferEvent.Event.To;
 
-        return new MetaAuthMintResult<T>(owner, ipfsFileInfo.Hash, userData, tokenId);
+        return new MetaAuthMintResult(owner, ipfsFileInfo.Hash, userData, tokenId);
 
     }
 
-    public async Task<T> GetUserData(string cid) => await _ipfsService.GetNftMetadataFromIpfsAsync(cid);
+    /*public async Task<T> GetUserData(string cid) => await _ipfsService.GetNftMetadataFromIpfsAsync(cid);
 
     public async Task<bool> SignIn(int tokenId, string connectedUser,  string webAppAddress)
     {

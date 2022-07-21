@@ -2,7 +2,6 @@
 using MetaAuth.ContractIntegration.Core.QueryMethods;
 using MetaAuth.ContractIntegration.Core.TransactionMethods;
 using MetaAuth.ContractIntegration.Exceptions;
-using MetaAuth.Metamask.Ethereum;
 using Nethereum.Contracts.ContractHandlers;
 using Nethereum.RPC.Eth.DTOs;
 using Nethereum.UI;

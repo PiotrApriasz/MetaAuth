@@ -5,8 +5,7 @@ using Newtonsoft.Json;
 
 namespace MetaAuth.Logic.IPFS;
 
-public class IpfsDownloader<T>
-    where T : MetaAuthUserData
+public class IpfsDownloader
 {
     private string _cid;
     private readonly HttpClient _httpClient;
@@ -19,13 +18,13 @@ public class IpfsDownloader<T>
         _httpClient = httpClient;
     }
 
-    public async Task<T> GetAsync()
+    public async Task<MetaAuthUserData> GetAsync()
     {
         await using var s = _httpClient.GetStreamAsync(_url + _cid).Result;
         using var sr = new StreamReader(s);
         using JsonReader reader = new JsonTextReader(sr);
         var serializer = new JsonSerializer();
-        var metaAuthMetadata = serializer.Deserialize<T>(reader);
+        var metaAuthMetadata = serializer.Deserialize<MetaAuthUserData>(reader);
 
         return metaAuthMetadata;
     }

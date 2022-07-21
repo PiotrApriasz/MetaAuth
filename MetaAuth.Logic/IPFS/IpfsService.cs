@@ -6,29 +6,28 @@ using MetaAuth.Logic.Exceptions;
 
 namespace MetaAuth.Logic.IPFS;
 
-public class IpfsService<T> : IIpfsService<T>
-    where T : MetaAuthUserData
+public class IpfsService : IIpfsService
 {
-    private readonly string _userName;
-    private readonly string _password;
-    private readonly string _ipfsUrl;
-    private readonly string _ipfsGateway;
-    private readonly HttpClient _httpClient;
+    public readonly string _userName;
+    public readonly string _password;
+    public readonly string _ipfsUrl;
+    public readonly string _ipfsGateway;
+    public readonly HttpClient _httpClient;
 
-    public IpfsService(string userName, string password, string ipfsUrl, string ipfsGateway, HttpClient httpClient)
+    public IpfsService(IpfsConfig config, HttpClient httpClient)
     {
-        _ipfsUrl = ipfsUrl;
+        _ipfsUrl = config.IpfsServiceBaseUrl;
         _httpClient = httpClient;
-        _ipfsGateway = ipfsGateway;
-        _userName = userName;
-        _password = password;
+        _ipfsGateway = config.IpfsGateway;
+        _userName = config.IpfsProjectId;
+        _password = config.IpfsKey;
     }
 
-    public async Task<IpfsFileInfo> AddNftMetadataToIpfsAsync(T metadata, string fileName)
+    public async Task<IpfsFileInfo> AddNftMetadataToIpfsAsync(MetaAuthUserData metadata, string fileName)
     {
         try
         {
-            var ipfsUploader = new IpfsUploader<T>(_ipfsUrl, _userName, _password, _httpClient);
+            var ipfsUploader = new IpfsUploader(_ipfsUrl, _userName, _password, _httpClient);
             var result = await ipfsUploader.AddObjectAsJson(metadata, fileName);
             return result;
         }
@@ -39,11 +38,11 @@ public class IpfsService<T> : IIpfsService<T>
         }
     }
 
-    public async Task<T> GetNftMetadataFromIpfsAsync(string cid)
+    public async Task<MetaAuthUserData> GetNftMetadataFromIpfsAsync(string cid)
     {
         try
         {
-            var ipfsDownloader = new IpfsDownloader<T>(_ipfsGateway, cid, _httpClient);
+            var ipfsDownloader = new IpfsDownloader(_ipfsGateway, cid, _httpClient);
             var result = await ipfsDownloader.GetAsync();
             return result;
         }

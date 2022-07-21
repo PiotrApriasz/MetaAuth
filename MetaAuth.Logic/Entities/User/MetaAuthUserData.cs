@@ -11,8 +11,8 @@ public class MetaAuthUserData
     public string Email { get; set; }
     public Address Address { get; set; }
     public IdCard IdCard { get; set; }
-    public uint IssueTime { get; set; }
-    public string ImageUrl { get; set; }
+    public long IssueTime { get; set; }
+    public string Base64PhotoCode { get; set; }
 
     public MetaAuthUserData()
     {
