@@ -1,0 +1,41 @@
+﻿@using MetaAuth.Logic.Entities
+
+<MudCard Elevation="12" Class="glass-panel mt-16 md-16">
+    <MudCardContent>
+        <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center">
+            <MudImage Src="@_photoUrl"
+                      Elevation="12" Alt="User Photo" Class="rounded-lg" 
+                      Width="180" Height="180"></MudImage>
+            <MudText Class="mt-3" Typo="Typo.h4">@($"{TokenData.Metadata.Name} {TokenData.Metadata.Surname}")</MudText>
+            <MudText Class="mt-1" Typo="Typo.body1">Token ID: @TokenData.TokenId</MudText>
+        </MudStack>
+    </MudCardContent>
+</MudCard>
+
+@code {
+
+    [Parameter]
+    public MetaAuthTokenData TokenData { get; set; }
+
+    private string _photoUrl;
+
+    protected override void OnInitialized()
+    {
+        _photoUrl = $"data:image/jpg;base64,{TokenData.Metadata.Base64PhotoCode}";
+    }
+
+}
+
+<style>
+    .glass-panel {
+      color: #fff;
+      margin: 40px auto;
+      background-color: rgba(255,255,255,0.06);
+      width: 700px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      align-content: center;
+      align-items: center;
+    }
+   
+</style>

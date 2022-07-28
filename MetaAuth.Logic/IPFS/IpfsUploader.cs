@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace MetaAuth.Logic.IPFS;
 
-internal class IpfsUploader
+public class IpfsUploader
 {
     private readonly AuthenticationHeaderValue _authHeaderValue;
     private readonly HttpClient _httpClient;
@@ -15,11 +15,9 @@ internal class IpfsUploader
 
     public IpfsUploader(string url, string userName, string password, HttpClient httpClient)
     {
-        if (!url.EndsWith("api/v0")) url = url.TrimEnd('/') + "/api/v0";
-
         _url = url;
         _httpClient = httpClient;
-        
+
         var byteArray = Encoding.UTF8.GetBytes(userName + ":" + password);
         _authHeaderValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
     }
@@ -46,7 +44,7 @@ internal class IpfsUploader
 
         _httpClient.DefaultRequestHeaders.Authorization = _authHeaderValue;
         var query = pin ? "?pin=true&cid-version=1" : "?cid-version=1";
-        var fullUrl = _url + "/add";
+        var fullUrl = "https://ipfs.infura.io:5001/api/v0/add" + query;
         var httpResponseMessage = await _httpClient.PostAsync(fullUrl, content);
         httpResponseMessage.EnsureSuccessStatusCode();
         var stream = await httpResponseMessage.Content.ReadAsStreamAsync();

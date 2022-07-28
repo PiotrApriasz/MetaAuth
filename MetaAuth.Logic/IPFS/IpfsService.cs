@@ -8,11 +8,11 @@ namespace MetaAuth.Logic.IPFS;
 
 public class IpfsService : IIpfsService
 {
-    public readonly string _userName;
-    public readonly string _password;
-    public readonly string _ipfsUrl;
-    public readonly string _ipfsGateway;
-    public readonly HttpClient _httpClient;
+    private readonly string _userName;
+    private readonly string _password;
+    private readonly string _ipfsUrl;
+    private readonly string _ipfsGateway;
+    private readonly HttpClient _httpClient;
 
     public IpfsService(IpfsConfig config, HttpClient httpClient)
     {
@@ -34,7 +34,7 @@ public class IpfsService : IIpfsService
         catch (Exception e)
         {
             throw new IpfsConnectionException
-                ($"Error occured while adding file to ipfs service | {e.Message} | {e.StackTrace}");
+                ($"Error occured while adding file to ipfs service: {e.Message} | {e.StackTrace}");
         }
     }
 

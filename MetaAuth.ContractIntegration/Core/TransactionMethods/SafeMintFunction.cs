@@ -3,7 +3,7 @@ using Nethereum.Contracts;
 
 namespace MetaAuth.ContractIntegration.Core.TransactionMethods;
 
-[Function("safeMInt", "uint256")]
+[Function("safeMint", "uint256")]
 public class SafeMintFunction : FunctionMessage
 {
     [Parameter("address", "to", 1)]

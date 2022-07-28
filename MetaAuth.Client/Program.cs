@@ -30,16 +30,6 @@ builder.Services.AddSingleton(services =>
     return selectedHostProvider;
 });
 
-builder.Services.AddScoped<ITokenService>(services =>
-{
-    var selectedEthereumHost = services.GetService<SelectedEthereumHostProviderService>();
-    if (selectedEthereumHost == null)
-        throw new NullReferenceException("Service is unable to connect with web3 provider");
-    var web3 = selectedEthereumHost.SelectedHost.GetWeb3Async().Result;
-    return new TokenService(web3, builder.Configuration["SmartContractAddress"]!);
-
-});
-
 builder.Services.AddScoped<IIpfsService>(services =>
 {
     var ipfsConfig = new IpfsConfig
@@ -50,7 +40,20 @@ builder.Services.AddScoped<IIpfsService>(services =>
         IpfsServiceBaseUrl = builder.Configuration["IPFSServiceBaseURL"]!
     };
 
-    return new IpfsService(ipfsConfig, services.GetService<HttpClient>()!);
+    return new IpfsService(ipfsConfig, services.GetService<HttpClient>()
+                                       ?? throw new InvalidOperationException("Unable to provide HttpClient"));
+});
+
+builder.Services.AddScoped<ITokenService>(services =>
+{
+    var selectedEthereumHost = services.GetService<SelectedEthereumHostProviderService>();
+    if (selectedEthereumHost == null)
+        throw new NullReferenceException("Service is unable to connect with web3 provider");
+    var web3 = selectedEthereumHost.SelectedHost.GetWeb3Async().Result;
+    return new TokenService(web3, builder.Configuration["SmartContractAddress"]!, 
+        services.GetService<IIpfsService>() 
+        ?? throw new InvalidOperationException
+            ($"Unable to provide service {nameof(IIpfsService)}"));
 });
 
 builder.Services.AddScoped<IAuthenticationService>(services =>
@@ -61,7 +64,9 @@ builder.Services.AddScoped<IAuthenticationService>(services =>
     var web3 = selectedEthereumHost.SelectedHost.GetWeb3Async().Result;
 
     return new AuthenticationService(web3,
-        builder.Configuration["SmartContractAddress"]!, services.GetService<IIpfsService>()!);
+        builder.Configuration["SmartContractAddress"]!, services.GetService<IIpfsService>() 
+                                                        ?? throw new InvalidOperationException
+                                                            ($"Unable to provide service {nameof(IIpfsService)}"));
 });
 
 builder.Services.AddSingleton<AuthenticationStateProvider, EthereumAuthenticationStateProvider>();

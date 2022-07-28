@@ -1,4 +1,5 @@
-﻿using MetaAuth.Logic.Entities;
+﻿using System.Numerics;
+using MetaAuth.Logic.Entities;
 using MetaAuth.Logic.Entities.IPFS;
 using MetaAuth.Logic.Entities.User;
 using MetaAuth.Logic.IPFS;
@@ -16,24 +17,6 @@ public class AuthenticationService : MetaAuthBase, IAuthenticationService
     public AuthenticationService(IWeb3 hostProvider, string address, IIpfsService ipfsService) : base(hostProvider, address)
     {
         _ipfsService = ipfsService;
-    }
-
-    public async Task<MetaAuthMintResult> SafeMint(MetaAuthUserData metadata, byte[] photoBytes, string userMetamaskAddress)
-    {
-        var ipfsFileInfo = await _ipfsService.AddNftMetadataToIpfsAsync(metadata, 
-            $"metaauth-{metadata.IssueTime}-{metadata.Name}{metadata.Surname}.json");
-
-        var mintReceipt = await MetaAuthInstance.SafeMintRequestAsync(userMetamaskAddress,
-            ipfsFileInfo.Hash);
-
-        var userData = await _ipfsService.GetNftMetadataFromIpfsAsync(ipfsFileInfo.Hash);
-
-        var transferEvent = mintReceipt.DecodeAllEvents<TransferEventDTO>()[0];
-        var tokenId = (int)transferEvent.Event.TokenId;
-        var owner = transferEvent.Event.To;
-
-        return new MetaAuthMintResult(owner, ipfsFileInfo.Hash, userData, tokenId);
-
     }
 
     /*public async Task<T> GetUserData(string cid) => await _ipfsService.GetNftMetadataFromIpfsAsync(cid);

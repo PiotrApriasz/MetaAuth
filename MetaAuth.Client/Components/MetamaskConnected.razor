@@ -1,6 +1,7 @@
 ﻿@using MetaAuth.Logic.Services
+@using MetaAuth.Logic.Entities
 @inject ITokenService TokenService
-
+@inject ISnackbar Snackbar
 
 <MudText Typo="Typo.h4" Align="Align.Center">Your Metamask account is connected!</MudText>
 <MudCard Elevation="12" Class="glass-panel mt-7">
@@ -33,7 +34,32 @@
     }
     else
     {
-        <Register SelectedAccount="@SelectedAccount" />
+        <Register SelectedAccount="@SelectedAccount" OnUserRegistered="UserRegistered" />
+    }
+}
+else
+{
+    @if (_tokenGathered)
+    {
+        <UserToken TokenData="@_tokenData"></UserToken>    
+    }
+    else
+    {
+        <MudCard Elevation="12" Class="glass-panel mt-16">
+            <MudCardContent>
+                <MudText Typo="Typo.h6" Align="Align.Center">Provide your token id to get your data</MudText>
+                <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="mt-7 mb-7">
+                    <MudTextField @bind-Value="_tokenId"
+                                  For="@(() => _tokenId)"
+                                  Immediate="true"
+                                  Label="Token ID"
+                                  InputType="InputType.Text"
+                                  Style="width: 100px" Class="mb-2"/>
+                    <MudButton Class="glass-button" Variant="Variant.Filled" Size="Size.Large"
+                               OnClick="GetUserTokenData">Get Data</MudButton>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
     }
 }
 
@@ -41,10 +67,14 @@
     [Parameter]
     public string SelectedAccount { get; set; } = null!;
 
+    private MetaAuthTokenData? _tokenData;
+    private int _tokenId;
+
     bool _userHaveToken;
+    bool _tokenGathered;
     bool _register;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
         _userHaveToken = await TokenService.CheckIfUserHaveTokenAsync(SelectedAccount);
     }
@@ -52,6 +82,28 @@
     private void EnableRegister()
     {
         _register = true;
+    }
+
+    private void UserRegistered(MetaAuthTokenData tokenData)
+    {
+        _tokenData = tokenData;
+        _tokenGathered = true;
+        _userHaveToken = true;
+    }
+
+    private async Task GetUserTokenData()
+    {
+        _tokenData = await TokenService.GetUserToken(_tokenId, SelectedAccount);
+        if (_tokenData is null)
+        {
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+            Snackbar.Add("You are not owner of this token. Try again", Severity.Error);
+        }
+        else
+        {
+            _tokenGathered = true;
+            StateHasChanged();
+        }
     }
 }
 

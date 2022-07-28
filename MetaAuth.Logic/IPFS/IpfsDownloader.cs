@@ -13,20 +13,24 @@ public class IpfsDownloader
 
     public IpfsDownloader(string url, string cid, HttpClient httpClient)
     {
-        _url = url + "/ipfs/";
+        _url = url;
         _cid = cid;
         _httpClient = httpClient;
     }
 
     public async Task<MetaAuthUserData> GetAsync()
     {
-        await using var s = _httpClient.GetStreamAsync(_url + _cid).Result;
-        using var sr = new StreamReader(s);
-        using JsonReader reader = new JsonTextReader(sr);
-        var serializer = new JsonSerializer();
-        var metaAuthMetadata = serializer.Deserialize<MetaAuthUserData>(reader);
+        var s = await _httpClient.GetStreamAsync("https://meta-auth.infura-ipfs.io/ipfs/" + _cid);
+        await using (s)
+        {
+            using var sr = new StreamReader(s);
+            using JsonReader reader = new JsonTextReader(sr);
+            var serializer = new JsonSerializer();
+            var metaAuthMetadata = serializer.Deserialize<MetaAuthUserData>(reader);
 
-        return metaAuthMetadata;
+            return metaAuthMetadata;
+        }
+        
     }
     
 }

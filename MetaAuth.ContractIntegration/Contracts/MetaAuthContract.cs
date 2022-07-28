@@ -84,8 +84,11 @@ public class MetaAuthContract : IContract
                 Uri = uri
             };
 
-            safeMintFunction.Gas = await ContractHandler.EstimateGasAsync(safeMintFunction);
-            safeMintFunction.GasPrice = Nethereum.Web3.Web3.Convert.ToWei(25, UnitConversion.EthUnit.Gwei);
+            //safeMintFunction.Gas = await ContractHandler.EstimateGasAsync(safeMintFunction);
+            //safeMintFunction.GasPrice = Nethereum.Web3.Web3.Convert.ToWei(25, UnitConversion.EthUnit.Gwei);
+
+            //safeMintFunction.Gas = 3000000;
+            //safeMintFunction.GasPrice = 10000000000;
 
             return await ContractHandler.SendRequestAndWaitForReceiptAsync(safeMintFunction);
         }

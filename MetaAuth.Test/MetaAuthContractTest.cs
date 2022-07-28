@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using NBitcoin.Secp256k1;
 using Nethereum.Web3;
 using Nethereum.Web3.Accounts;
@@ -8,28 +9,34 @@ using MetaAuth.Logic.Entities.IPFS;
 using MetaAuth.Logic.Entities.User;
 using MetaAuth.Logic.IPFS;
 using Moq;
+using Nethereum.Contracts;
+using Nethereum.Contracts.Standards.ERC721.ContractDefinition;
 using Nethereum.Util;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace MetaAuth.Test;
 
 public class MetaAuthContractTest
 {
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public MetaAuthContractTest(ITestOutputHelper testOutputHelper)
+    {
+        _testOutputHelper = testOutputHelper;
+    }
+
     private Web3 GetWeb3()
     {
         var account = new Account("a8fee21c08c322fde3021cf1bea7b469fa5182bb7186126e803abb98b530e49e");
-        var infuraUrl = "https://ropsten.infura.io/v3/c47347be164a4832ac5e7a6e96157dba";
+        const string infuraUrl = "https://goerli.infura.io/v3/272d6a9003e64778a885d5e058ed852a";
         return new Web3(account, infuraUrl);
     }
     
     private MetaAuthUserData GetMetadata() =>
         new()
         {
-            //Type = MetaAuthType.UserData,
-            //Description = "This is second test ipfs data for testing IpfsService in MetaAuth app",
-            //Username = "testuser",
-            IssueTime = 123456789,
-            //WebAppAddress = "testTest.com"
+            
         };
 
     private HttpClient MockHttpClient()
@@ -41,10 +48,6 @@ public class MetaAuthContractTest
         return mockFactory.Object.CreateClient();
     }
 
-    private IpfsService GetIpfsSerrvice() =>
-        new ("28k2jK8Gu4h3ZhNbLclNlI0qx81", "c0903b857c2818539f1b27c308fd9bf7",
-            "https://ipfs.infura.io:5001", "https://meta-auth.infura-ipfs.io", MockHttpClient());
-    
     [Fact]
     public async void SafeMint_CorrectData_MintNftWithMetadata()
     {
@@ -52,23 +55,38 @@ public class MetaAuthContractTest
         web3.Eth.TransactionManager.UseLegacyAsDefault = true;
 
         var metaAuthContract = new MetaAuthContract
-            (web3, "0x9c3507cbf042f5bd7df1b8fd449ebb31b62ae948");
+            (web3, "0x967dbc61c8875e26c74f80ecb7bdd6155fc7724f");
         
-        var ipfsService = GetIpfsSerrvice();
-        var returnData = await ipfsService.AddNftMetadataToIpfsAsync(GetMetadata(), "metaauth-9971-testuser.json");
 
         var mintRecitpt = await metaAuthContract
-            .SafeMintRequestAsync("0xF2293B4C787f47726DbAD88d412F8F0cD2A17Fe3", returnData.Hash);
+            .SafeMintRequestAsync("0xF2293B4C787f47726DbAD88d412F8F0cD2A17Fe3",
+                "bafybeifrxhvfjcixylw3i6clo2xsyugph6d4hploynee6pyta5etaw5xx4");
 
-        var ownerOfToken = await metaAuthContract.OwnerOfQueryAsync(0);
+        var transferEvent = mintRecitpt.DecodeAllEvents<TransferEventDTO>();
+        /*var tokenId = (int)transferEvent.Event.TokenId;
+        var owner = transferEvent.Event.To;
+
+        _testOutputHelper.WriteLine(tokenId.ToString());
+
+        var ownerOfToken = await metaAuthContract.OwnerOfQueryAsync(tokenId);
         
         Assert.True(ownerOfToken.IsTheSameAddress("0xF2293B4C787f47726DbAD88d412F8F0cD2A17Fe3"));
 
-        var tokenUri = await metaAuthContract.TokenUriQueryAsync(0);
-        
-        Assert.Equal(returnData.Hash, tokenUri);
-        
-        await ipfsService.GetNftMetadataFromIpfsAsync(returnData.Hash);
+        var tokenUri = await metaAuthContract.TokenUriQueryAsync(tokenId);*/
 
+    }
+
+    [Fact]
+    public async void BalanceOf_NFTMinted_ReturnOne()
+    {
+        var web3 = GetWeb3();
+        web3.Eth.TransactionManager.UseLegacyAsDefault = true;
+        
+        var metaAuthContract = new MetaAuthContract
+            (web3, "0x967dbc61c8875e26c74f80ecb7bdd6155fc7724f");
+
+        var result = await metaAuthContract.BalanceOfQueryAsync("0xf2293b4c787f47726dbad88d412f8f0cd2a17fe3");
+        
+        Assert.Equal(1, result);
     }
 }
