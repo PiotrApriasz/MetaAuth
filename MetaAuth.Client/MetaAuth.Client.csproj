@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
@@ -38,8 +38,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MetaAuth.API\MetaAuth.API.csproj" />
-      <ProjectReference Include="..\MetaAuth.Logic\MetaAuth.Logic.csproj" />
+      <ProjectReference Include="..\MetaAuth.Core\MetaAuth.Core.csproj" />
     </ItemGroup>
 
 </Project>

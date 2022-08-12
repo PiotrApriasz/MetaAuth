@@ -1,7 +1,7 @@
 using MetaAuth.Client;
-using MetaAuth.Logic.Entities.IPFS;
-using MetaAuth.Logic.IPFS;
-using MetaAuth.Logic.Services;
+using MetaAuth.Core.Entities.IPFS;
+using MetaAuth.Core.IPFS;
+using MetaAuth.Core.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

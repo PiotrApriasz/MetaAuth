@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Google.Protobuf.WellKnownTypes;
-using MetaAuth.Logic.Entities.User;
+using MetaAuth.Core.Entities.User;
 
 namespace MetaAuth.Client.Validators;
 

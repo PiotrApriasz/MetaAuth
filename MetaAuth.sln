@@ -5,11 +5,13 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.ContractIntegration", "MetaAuth.ContractIntegration\MetaAuth.ContractIntegration.csproj", "{19B9A15C-0BC4-4123-B6FC-57D163B4235D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Logic", "MetaAuth.Logic\MetaAuth.Logic.csproj", "{5D3C1DD0-6F6E-4980-9A44-2597B23B8930}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Core", "MetaAuth.Core\MetaAuth.Core.csproj", "{5D3C1DD0-6F6E-4980-9A44-2597B23B8930}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Test", "MetaAuth.Test\MetaAuth.Test.csproj", "{02E76816-B2A2-42E7-9DD1-7A79E05F740F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.Client", "MetaAuth.Client\MetaAuth.Client.csproj", "{853AD8C5-3E03-4CE8-847F-D9BA37DFC068}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaAuth.Client", "MetaAuth.Client\MetaAuth.Client.csproj", "{853AD8C5-3E03-4CE8-847F-D9BA37DFC068}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaAuth.API", "MetaAuth.API\MetaAuth.API.csproj", "{1A5976BA-783A-4541-80E0-2F4E46F1522E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{853AD8C5-3E03-4CE8-847F-D9BA37DFC068}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{853AD8C5-3E03-4CE8-847F-D9BA37DFC068}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{853AD8C5-3E03-4CE8-847F-D9BA37DFC068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A5976BA-783A-4541-80E0-2F4E46F1522E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A5976BA-783A-4541-80E0-2F4E46F1522E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A5976BA-783A-4541-80E0-2F4E46F1522E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A5976BA-783A-4541-80E0-2F4E46F1522E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
