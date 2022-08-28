@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MetaAuth.API.Filters;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MetaAuth.API.Core.Endpoints;
 
@@ -11,7 +12,7 @@ public static class EndpointHandlers
     {
         if (validatable)
         {
-            app.MapGet(template, async (IMediator mediator, [AsParameters]TRequest request)
+            app.MapGet(template, async (IMediator mediator, TRequest request)
                     => await mediator.Send(request))
                 .AddRouteHandlerFilter<ValidatorFilter<TRequest>>();
         }
@@ -30,7 +31,7 @@ public static class EndpointHandlers
     {
         if (validatable)
         {
-            app.MapPost(template, async (IMediator mediator, [AsParameters]TRequest request)
+            app.MapPost(template, async (IMediator mediator, TRequest request)
                     => await mediator.Send(request))
                 .AddRouteHandlerFilter<ValidatorFilter<TRequest>>();
         }

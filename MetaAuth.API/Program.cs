@@ -1,9 +1,12 @@
 using FluentValidation.AspNetCore;
 using MediatR;
 using MetaAuth.API.Core.Features;
+using MetaAuth.API.Middleware;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -18,6 +21,8 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.RegisterFeatures();
 
 var app = builder.Build();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.MapEndpoints();
 
