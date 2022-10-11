@@ -2,6 +2,7 @@
 using MetaAuth.Core.Entities;
 using MetaAuth.Core.Entities.User;
 using MetaAuth.Core.IPFS;
+using MetaAuth.SharedEntities.AzureCosmosDb;
 using Nethereum.Contracts;
 using Nethereum.Contracts.Standards.ERC721.ContractDefinition;
 using Nethereum.Web3;
@@ -67,9 +68,29 @@ public class TokenService : MetaAuthBase, ITokenService
             return null;
 
         var cid = await MetaAuthInstance.TokenUriQueryAsync(tokenIdNum);
-        
+
         var metadata = await _ipfsService.GetNftMetadataFromIpfsAsync(cid);
 
         return new MetaAuthTokenData(accountAddress, cid, metadata, (int)tokenIdNum);
+    }
+    
+    public async Task<bool> AddAppToToken(SignUpModel data, MetaAuthTokenData userTokenData)
+    {
+        var tokenIdNum = new BigInteger(userTokenData.TokenId);
+        
+        userTokenData.Metadata.RegisteredApps.Add(new RegisteredApp
+        {
+            UserId = data.UserIdentificator,
+            WebAppAddress = data.AppName,
+            RegisterTime = data.RequestCreation,
+            RequiredUserData = data.RequiredUserData
+        });
+        
+        userTokenData.Metadata.IssueTime = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+
+        var ipfsFileInfo = await _ipfsService.AddNftMetadataToIpfsAsync(userTokenData.Metadata,
+            $"metaauth-{userTokenData.Metadata.IssueTime}-{userTokenData.Metadata.Name}{userTokenData.Metadata.Surname}.json");
+
+        return await MetaAuthInstance.UpdateTokenUriRequestAsync(tokenIdNum, ipfsFileInfo.Hash);
     }
 }

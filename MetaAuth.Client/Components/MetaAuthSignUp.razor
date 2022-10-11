@@ -1,0 +1,107 @@
+﻿@using MetaAuth.SharedEntities
+@using MetaAuth.SharedEntities.AzureCosmosDb
+@using MetaAuth.Client.Services
+@using MetaAuth.Client.Entities
+@using MetaAuth.Core.Entities
+@using MetaAuth.Core.Services
+
+@inject IAccountService AccountService
+@inject ITokenService TokenService
+@inject ISnackbar Snackbar
+
+<MetamaskConnected SelectedAccount="@SelectedAccount" OnTokenGathered="TokenGathered" OnTokenDataGathered="TokenDataGathered"/>
+
+<MudText Typo="Typo.h5" Align="Align.Center">You have requested MetaAuth sign up. Below is data which will be registered</MudText>
+
+<MudCard Elevation="12" Class="glass-panel mt-7 md-16">
+    <MudCardContent>
+        <MudText Typo="Typo.body1" Align="Align.Center" Class="mt-7"><b>Application Name:</b> @_signUpData?.SignUpModel.AppName</MudText>
+        <MudText Typo="Typo.body1" Align="Align.Center"><b>User Identificator:</b> @_signUpData?.SignUpModel.UserIdentificator</MudText>
+        <MudText Typo="Typo.body1" Align="Align.Center"><b>Date of request creation:</b> @_signUpData?.SignUpModel.RequestCreation</MudText>
+        <MudGrid Justify="Justify.Center" Class="mt-7">
+            @if (_tokenGathered)
+            {
+                <MudButton Class="glass-button" Variant="Variant.Filled" Size="Size.Large"
+                           OnClick="RegisterApp">Register Token</MudButton>
+            }
+            else
+            {
+                <MudTooltip Text="To proceed registration enter your token id">
+                    <MudButton Class="glass-button" Variant="Variant.Filled" Size="Size.Large"
+                                Disabled="true">Register Token</MudButton>
+                </MudTooltip>
+            }
+        </MudGrid>
+    </MudCardContent>
+</MudCard>
+
+
+
+@code {
+    [Parameter]
+    public string SelectedAccount { get; set; } = null!;
+    [Parameter]
+    public string RequestId { get; set; } = null!;
+
+    private bool _tokenGathered;
+    private MetaAuthTokenData _tokenData;
+    private SignUpData? _signUpData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+        await GetSignUpData();
+        StateHasChanged();
+    }                                       
+
+    private void TokenGathered(bool tokenGathered)
+    {
+        _tokenGathered = tokenGathered;
+    }
+
+    private void TokenDataGathered(MetaAuthTokenData data)
+    {
+        _tokenData = data;
+    }
+
+    private async Task GetSignUpData()
+    {
+        _signUpData = await AccountService.GetSignUpData(RequestId);
+    }
+
+    private async Task RegisterApp()
+    {
+        if (_signUpData is not null)
+        {
+            var signUpModel = _signUpData.SignUpModel;
+            var result = await TokenService.AddAppToToken(signUpModel, _tokenData);
+
+            if (!result)
+            {
+                Snackbar.Add("You have been canceled transaction. Try again or close this page", Severity.Warning);
+            }
+            else
+            {
+                Snackbar.Add("Successfully registered new app in your MetaAuth token", Severity.Success);
+            }
+        }
+        else
+        {
+            Snackbar.Add("Your sign up data hasn't been downloaded. Try again!", Severity.Error);
+        }
+    }
+}
+
+<style>
+    .glass-panel {
+      color: #fff;
+      margin: 40px auto;
+      background-color: rgba(255,255,255,0.06);
+      width: 700px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      align-content: center;
+      align-items: center;
+    }
+   
+</style>

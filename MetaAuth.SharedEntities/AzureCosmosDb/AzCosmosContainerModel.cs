@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MetaAuth.SharedEntities;
+namespace MetaAuth.SharedEntities.AzureCosmosDb;
 
 public class AzCosmosContainerModel
 {

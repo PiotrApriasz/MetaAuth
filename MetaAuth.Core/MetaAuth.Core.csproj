@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MetaAuth.ContractIntegration\MetaAuth.ContractIntegration.csproj" />
+      <ProjectReference Include="..\MetaAuth.SharedEntities\MetaAuth.SharedEntities.csproj" />
     </ItemGroup>
 
 </Project>

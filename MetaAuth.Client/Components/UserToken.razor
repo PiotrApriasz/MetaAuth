@@ -8,6 +8,28 @@
                       Width="180" Height="180"></MudImage>
             <MudText Class="mt-3" Typo="Typo.h4">@($"{TokenData.Metadata.Name} {TokenData.Metadata.Surname}")</MudText>
             <MudText Class="mt-1" Typo="Typo.body1">Token ID: @TokenData.TokenId</MudText>
+            @if (TokenData.Metadata.RegisteredApps.Any())
+            {
+                <MudText Class="mt-3" Typo="Typo.h5">Connected Applications: @TokenData.Metadata.RegisteredApps.Count</MudText>
+                <MudExpansionPanels Class="mt-3">
+                    @foreach (var app in TokenData.Metadata.RegisteredApps)
+                    {
+                        <MudExpansionPanel Text="@app.WebAppAddress">
+                            <MudText Typo="Typo.body1"><strong>User Id: </strong>@app.UserId</MudText>
+                            <MudText Typo="Typo.body1"><strong>Register Date: </strong>@app.RegisterTime.Date</MudText>
+                            <MudText Typo="Typo.body1"><strong>Required User Data: </strong></MudText>
+                            @foreach (var requiredData in app.RequiredUserData)
+                            {
+                                <MudText Typo="Typo.body1">@requiredData</MudText>
+                            }
+                        </MudExpansionPanel>                
+                    }
+                </MudExpansionPanels>
+            }
+            else
+            {
+                <MudText Class="mt-3" Typo="Typo.h5">Connected Applications: 0</MudText>
+            }
         </MudStack>
     </MudCardContent>
 </MudCard>

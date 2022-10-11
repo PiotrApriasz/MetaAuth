@@ -1,4 +1,4 @@
-﻿namespace MetaAuth.API.Core.Response;
+﻿namespace MetaAuth.SharedEntities;
 
 public class BaseResponse
 {

@@ -12,13 +12,13 @@ public static class EndpointHandlers
     {
         if (validatable)
         {
-            app.MapGet(template, async (IMediator mediator, TRequest request)
+            app.MapGet(template, async (IMediator mediator, [AsParameters] TRequest request)
                     => await mediator.Send(request))
                 .AddRouteHandlerFilter<ValidatorFilter<TRequest>>();
         }
         else
         {
-            app.MapGet(template, async (IMediator mediator, [AsParameters]TRequest request)
+            app.MapGet(template, async (IMediator mediator, [AsParameters] TRequest request)
                 => await mediator.Send(request));
         }
         
@@ -37,7 +37,7 @@ public static class EndpointHandlers
         }
         else
         {
-            app.MapPost(template, async (IMediator mediator, [AsParameters]TRequest request)
+            app.MapPost(template, async (IMediator mediator, TRequest request)
                 => await mediator.Send(request));
         }
         

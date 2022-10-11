@@ -6,6 +6,17 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+const string mainPolicy = "MetaAuthPolicy";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: mainPolicy,
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7235");
+        });
+});
+
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -21,6 +32,8 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.RegisterFeatures();
 
 var app = builder.Build();
+
+app.UseCors(mainPolicy);
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 

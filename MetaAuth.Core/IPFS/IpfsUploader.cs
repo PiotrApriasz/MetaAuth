@@ -17,8 +17,8 @@ public class IpfsUploader
     {
         _url = url;
         _httpClient = httpClient;
-
-        var byteArray = Encoding.UTF8.GetBytes(userName + ":" + password);
+        
+        var byteArray = Encoding.UTF8.GetBytes("28k2jK8Gu4h3ZhNbLclNlI0qx81" + ":" + "c0903b857c2818539f1b27c308fd9bf7");
         _authHeaderValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
     }
     
@@ -40,7 +40,6 @@ public class IpfsUploader
         var streamContent = new ByteArrayContent(fileBytes);
         streamContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
         content.Add(streamContent, "file", fileName);
-
 
         _httpClient.DefaultRequestHeaders.Authorization = _authHeaderValue;
         var query = pin ? "?pin=true&cid-version=1" : "?cid-version=1";

@@ -1,5 +1,6 @@
 ﻿@using MetaAuth.Core.Services
 @using MetaAuth.Core.Entities
+
 @inject ITokenService TokenService
 @inject ISnackbar Snackbar
 
@@ -67,6 +68,11 @@ else
     [Parameter]
     public string SelectedAccount { get; set; } = null!;
 
+    [Parameter]
+    public EventCallback<bool> OnTokenGathered { get; set; }
+    [Parameter]
+    public EventCallback<MetaAuthTokenData> OnTokenDataGathered { get; set; }
+
     private MetaAuthTokenData? _tokenData;
     private int _tokenId;
 
@@ -102,6 +108,8 @@ else
         else
         {
             _tokenGathered = true;
+            await OnTokenGathered.InvokeAsync(_tokenGathered);
+            await OnTokenDataGathered.InvokeAsync(_tokenData);
             StateHasChanged();
         }
     }

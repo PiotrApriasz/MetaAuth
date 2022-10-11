@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MetaAuth.API.Core.Response;
+using MetaAuth.SharedEntities;
 
 namespace MetaAuth.API.Filters;
 

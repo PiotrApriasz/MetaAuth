@@ -1,9 +1,7 @@
 ﻿using MediatR;
-using MetaAuth.API.Features.SignIn.Requests;
 using MetaAuth.API.Features.SignUp.Requests;
 using MetaAuth.API.Features.SignUp.Responses;
 using MetaAuth.API.Features.SignUp.Services;
-using static System.Threading.Tasks.Task;
 
 namespace MetaAuth.API.Features.SignUp.Handlers;
 

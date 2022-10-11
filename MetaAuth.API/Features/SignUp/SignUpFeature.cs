@@ -18,7 +18,8 @@ public class SignUpFeature : IFeature
 
     public IEndpointRouteBuilder MapEndpoints(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost<InitialSignUpRequest>("signup/initiate");
+        endpoints.MapPost<InitialSignUpRequest>("signup");
+        endpoints.MapGet<GetSignUpDataRequest>("signup/{RequestId}", false);
         return endpoints;
     }
 }

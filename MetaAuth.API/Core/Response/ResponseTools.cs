@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using FluentValidation.Results;
+using MetaAuth.SharedEntities;
 
 namespace MetaAuth.API.Core.Response;
 

@@ -3,6 +3,7 @@ using MetaAuth.ContractIntegration.Core.QueryMethods;
 using MetaAuth.ContractIntegration.Core.TransactionMethods;
 using MetaAuth.ContractIntegration.Exceptions;
 using Nethereum.Contracts.ContractHandlers;
+using Nethereum.JsonRpc.Client;
 using Nethereum.RPC.Eth.DTOs;
 using Nethereum.UI;
 using Nethereum.Util;
@@ -98,7 +99,7 @@ public class MetaAuthContract : IContract
         }
     }
 
-    public async Task<string> UpdateTokenUriRequestAsync(BigInteger tokenId, string uri)
+    public async Task<bool> UpdateTokenUriRequestAsync(BigInteger tokenId, string uri)
     {
         var updateTokenUriFunction = new UpdateTokenURIFunction
         {
@@ -106,6 +107,23 @@ public class MetaAuthContract : IContract
             Uri = uri
         };
 
-        return await ContractHandler.SendRequestAsync(updateTokenUriFunction);
+        try
+        {
+            await ContractHandler.SendRequestAsync(updateTokenUriFunction);
+            return true;
+        }
+        catch (RpcResponseException e)
+        {
+            if (e.Message.Contains("User denied transaction signature"))
+            {
+                return false;
+            }
+            
+            throw new ContractException($"Error occured while updating token uri | {e.Message} | {e.StackTrace}");
+        }
+        catch (Exception e)
+        {
+            throw new ContractException($"Error occured while updating token uri | {e.Message} | {e.StackTrace}");
+        }
     }
 }

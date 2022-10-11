@@ -6,7 +6,7 @@ public class MetaAuthUserData
 {
     public string Name { get; set; }
     public string Surname { get; set; }
-    public RegisteredApp RegisteredApp { get; set; }
+    public List<RegisteredApp> RegisteredApps { get; set; }
     public DateTime? BirthDate { get; set; }
     public string Email { get; set; }
     public Address Address { get; set; }
@@ -18,5 +18,6 @@ public class MetaAuthUserData
     {
         Address = new Address();
         IdCard = new IdCard();
+        RegisteredApps = new List<RegisteredApp>();
     }
 }

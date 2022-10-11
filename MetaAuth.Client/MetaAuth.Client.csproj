@@ -33,12 +33,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Services" />
       <Folder Include="wwwroot\images" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MetaAuth.Core\MetaAuth.Core.csproj" />
+      <ProjectReference Include="..\MetaAuth.SharedEntities\MetaAuth.SharedEntities.csproj" />
     </ItemGroup>
 
 </Project>

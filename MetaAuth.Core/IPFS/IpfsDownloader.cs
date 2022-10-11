@@ -7,7 +7,7 @@ namespace MetaAuth.Core.IPFS;
 
 public class IpfsDownloader
 {
-    private string _cid;
+    private readonly string _cid;
     private readonly HttpClient _httpClient;
     private readonly string _url;
 
@@ -18,7 +18,7 @@ public class IpfsDownloader
         _httpClient = httpClient;
     }
 
-    public async Task<MetaAuthUserData> GetAsync()
+    public async Task<MetaAuthUserData?> GetAsync()
     {
         var s = await _httpClient.GetStreamAsync("https://meta-auth.infura-ipfs.io/ipfs/" + _cid);
         await using (s)

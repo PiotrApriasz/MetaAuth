@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using MetaAuth.API.Features.SignUp.Requests;
-using MetaAuth.SharedEntities;
+using MetaAuth.SharedEntities.AzureCosmosDb;
 using Microsoft.Azure.Cosmos;
 
 namespace MetaAuth.API.Features.SignUp.Services;
@@ -31,5 +31,17 @@ public class SignUpService : ISignUpService
         await _signUpContainer.CreateItemAsync(signUpEnt, new PartitionKey(signUpEnt.AppName));
 
         return signUpEnt.Id;
+    }
+
+    public async Task<SignUpModel?> GetSignUpData(GetSignUpDataRequest request)
+    {
+        var query = new QueryDefinition(
+                query: "SELECT * FROM c WHERE c.id = @requestId")
+            .WithParameter("@requestId", request.RequestId);
+
+        using var feed = _signUpContainer.GetItemQueryIterator<SignUpModel>(
+            queryDefinition: query);
+        var response = await feed.ReadNextAsync();
+        return response.FirstOrDefault();
     }
 }

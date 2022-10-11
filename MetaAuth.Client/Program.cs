@@ -1,4 +1,5 @@
 using MetaAuth.Client;
+using MetaAuth.Client.Services;
 using MetaAuth.Core.Entities.IPFS;
 using MetaAuth.Core.IPFS;
 using MetaAuth.Core.Services;
@@ -68,6 +69,8 @@ builder.Services.AddScoped<IAuthenticationService>(services =>
                                                         ?? throw new InvalidOperationException
                                                             ($"Unable to provide service {nameof(IIpfsService)}"));
 });
+
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddSingleton<AuthenticationStateProvider, EthereumAuthenticationStateProvider>();
 
