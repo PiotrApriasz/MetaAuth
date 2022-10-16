@@ -18,14 +18,17 @@ public class SignUpService : ISignUpService
 
     public async Task<string> RegisterMetaAuthSignUp(InitialSignUpRequest request)
     {
-        var signUpEnt = new SignUpModel()
+        var signUpEnt = new SignUpModel
         {
-            Id = Guid.NewGuid().ToString(),
+            Id = Guid.NewGuid()
+                .ToString(),
             AppName = request.AppName,
             Finished = false,
             RequestCreation = DateTime.Now,
+            UserPublicWalletAddress = null,
             RequiredUserData = request.RequiredUserData,
-            UserIdentificator = request.UserIdentificator
+            UserIdentificator = request.UserIdentificator,
+
         };
 
         await _signUpContainer.CreateItemAsync(signUpEnt, new PartitionKey(signUpEnt.AppName));
@@ -44,4 +47,21 @@ public class SignUpService : ISignUpService
         var response = await feed.ReadNextAsync();
         return response.FirstOrDefault();
     }
+
+    public async Task FinishSignUp(FinishSignUpRequest request)
+    {
+        var signUpEnt = new SignUpModel
+        {
+            Id = request.Id,
+            AppName = request.AppName,
+            RequiredUserData = request.RequiredUserData,
+            UserIdentificator = request.UserIdentificator,
+            RequestCreation = request.RequestCreation,
+            UserPublicWalletAddress = request.UserPublicWalletAddress,
+            Finished = request.Finished
+        };
+        
+        await _signUpContainer.UpsertItemAsync(signUpEnt);
+    }
+    
 }

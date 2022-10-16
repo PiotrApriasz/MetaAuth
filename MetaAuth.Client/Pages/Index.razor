@@ -1,14 +1,11 @@
 ﻿@page "/"
 @implements IDisposable;
-@inject IJSRuntime JsRuntime;
 @inject SelectedEthereumHostProviderService SelectedHostProviderService
-@inject NavigationManager NavigationManager
 @inject MetamaskHostProvider MetamaskHostProvider;
 @inject SelectedEthereumHostProviderService SelectedHostProvider;
 @using Nethereum.UI
-@using Nethereum.Blazor
 @using Nethereum.Metamask
-@using MetaAuth.Client.Components
+@using MetaAuth.Client.Components.PageComponents
 
 <MudContainer Class="mt-16 md-16">
     @if (!_metamasConnected)

@@ -1,0 +1,18 @@
+﻿
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    
+    [Inject] 
+    private IDialogService DialogService { get; set; } = null!;
+
+    public async void ProcessError(string message)
+    {
+        await DialogService.ShowMessageBox("Error", message);
+        StateHasChanged();
+    }
+}

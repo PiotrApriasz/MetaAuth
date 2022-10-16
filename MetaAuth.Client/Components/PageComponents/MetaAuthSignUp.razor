@@ -4,10 +4,13 @@
 @using MetaAuth.Client.Entities
 @using MetaAuth.Core.Entities
 @using MetaAuth.Core.Services
+@using Newtonsoft.Json
 
 @inject IAccountService AccountService
 @inject ITokenService TokenService
 @inject ISnackbar Snackbar
+
+@inject IJSRuntime Js
 
 <MetamaskConnected SelectedAccount="@SelectedAccount" OnTokenGathered="TokenGathered" OnTokenDataGathered="TokenDataGathered"/>
 
@@ -42,9 +45,12 @@
     public string SelectedAccount { get; set; } = null!;
     [Parameter]
     public string RequestId { get; set; } = null!;
+    
+    [CascadingParameter]
+    public Error? Error { get; set; }
 
     private bool _tokenGathered;
-    private MetaAuthTokenData _tokenData;
+    private MetaAuthTokenData _tokenData = null!;
     private SignUpData? _signUpData;
 
     protected override async Task OnInitializedAsync()
@@ -74,6 +80,17 @@
         if (_signUpData is not null)
         {
             var signUpModel = _signUpData.SignUpModel;
+            var app = _tokenData.Metadata.RegisteredApps.Find(x => x.WebAppAddress == signUpModel.AppName);
+            
+            if (app is not null)
+            {
+                Snackbar.Add("You have already registered this application before. This sign up request will be abondend." +
+                             " This tab will close soon", Severity.Warning);
+                await Task.Delay(5000);
+                await Js.InvokeVoidAsync("window.close");
+                return;
+            }
+            
             var result = await TokenService.AddAppToToken(signUpModel, _tokenData);
 
             if (!result)
@@ -83,6 +100,14 @@
             else
             {
                 Snackbar.Add("Successfully registered new app in your MetaAuth token", Severity.Success);
+                
+                signUpModel.Finished = true;
+                signUpModel.UserPublicWalletAddress = SelectedAccount;
+
+                var finishResult = await AccountService.FinishSignUp(signUpModel);
+                
+                if (finishResult.Error)
+                    Error?.ProcessError($"Error occured during updating signup request: {finishResult.Message}");
             }
         }
         else

@@ -110,12 +110,12 @@
 
 @code {
     [Parameter]
-    public string SelectedAccount { get; set; }
+    public string SelectedAccount { get; set; } = null!;
     [Parameter]
     public EventCallback<MetaAuthTokenData> OnUserRegistered { get; set; }
     
-    MudForm _form;
-    MetaAuthUserData _userData;
+    MudForm _form = null!;
+    MetaAuthUserData _userData = null!;
     MetaAuthUserDataValidator _dataValidator = new();
     IBrowserFile? _userPhoto;
     MetaAuthTokenData? _mintResult;
@@ -124,28 +124,7 @@
 
     protected override void OnInitialized()
     {
-        _userData = new MetaAuthUserData()
-        {
-            Name = "Piotr",
-            Surname = "Apriasz",
-            BirthDate = DateTime.Now,
-            Address = new Address()
-            {
-                Country = "Poland",
-                FlatNumber = "12",
-                HomeNumber = "128",
-                Street = "Wojnarowa",
-                Town = "Korzenna",
-                PostalCode = "33-322"
-            },
-            Email = "piotrekapriasz@gmail.com",
-            IdCard = new IdCard()
-            {
-                IdCardNumber = "CBT-23432",
-                PersonalIdNumber = "99121709174",
-
-            }
-        };
+        _userData = new MetaAuthUserData();
     }
 
     private async Task Submit()

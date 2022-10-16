@@ -21,21 +21,11 @@
 </div>
 
 @code {
-    bool _drawerOpen = true;
     private bool _isDarkMode = true;
-    private MudTheme _theme = new();
-
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
+    private readonly MudTheme _theme = new();
 }
 
 <style>
-    .mud-appbar.mud-appbar-fixed-top {
-        position: static;
-    }
-    
     .page-background-class {
         background : url(images/background.png) no-repeat center center fixed;
                         -webkit-background-size: cover;

@@ -5,5 +5,5 @@ namespace MetaAuth.Client.Entities;
 
 public class SignUpData : BaseResponse
 {
-    public SignUpModel SignUpModel { get; set; }
+    public SignUpModel SignUpModel { get; set; } = null!;
 }

@@ -20,6 +20,7 @@ public class SignUpFeature : IFeature
     {
         endpoints.MapPost<InitialSignUpRequest>("signup");
         endpoints.MapGet<GetSignUpDataRequest>("signup/{RequestId}", false);
+        endpoints.MapPost<FinishSignUpRequest>("signup/finish", false);
         return endpoints;
     }
 }

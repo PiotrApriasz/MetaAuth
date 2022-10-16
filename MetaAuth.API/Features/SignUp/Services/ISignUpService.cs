@@ -7,4 +7,5 @@ public interface ISignUpService
 {
     Task<string> RegisterMetaAuthSignUp(InitialSignUpRequest request);
     Task<SignUpModel?> GetSignUpData(GetSignUpDataRequest request);
+    Task FinishSignUp(FinishSignUpRequest request);
 }

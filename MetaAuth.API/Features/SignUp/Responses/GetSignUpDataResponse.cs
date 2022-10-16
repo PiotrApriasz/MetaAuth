@@ -6,5 +6,5 @@ namespace MetaAuth.API.Features.SignUp.Responses;
 
 public class GetSignUpDataResponse : BaseResponse
 {
-    public SignUpModel SignUpModel { get; set; }
+    public SignUpModel SignUpModel { get; set; } = null!;
 }

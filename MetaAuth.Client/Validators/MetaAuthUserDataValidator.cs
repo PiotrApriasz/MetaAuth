@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Google.Protobuf.WellKnownTypes;
 using MetaAuth.Core.Entities.User;
 
 namespace MetaAuth.Client.Validators;

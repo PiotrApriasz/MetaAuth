@@ -5,8 +5,6 @@ using MetaAuth.ContractIntegration.Exceptions;
 using Nethereum.Contracts.ContractHandlers;
 using Nethereum.JsonRpc.Client;
 using Nethereum.RPC.Eth.DTOs;
-using Nethereum.UI;
-using Nethereum.Util;
 using Nethereum.Web3;
 
 namespace MetaAuth.ContractIntegration.Contracts;
