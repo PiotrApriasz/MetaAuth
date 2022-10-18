@@ -99,7 +99,8 @@
             }
             else
             {
-                Snackbar.Add("Successfully registered new app in your MetaAuth token", Severity.Success);
+                Snackbar.Add("Successfully registered new app in your MetaAuth token." +
+                             " You will return to the app tab in a while", Severity.Success);
                 
                 signUpModel.Finished = true;
                 signUpModel.UserPublicWalletAddress = SelectedAccount;
@@ -108,6 +109,9 @@
                 
                 if (finishResult.Error)
                     Error?.ProcessError($"Error occured during updating signup request: {finishResult.Message}");
+                
+                await Task.Delay(5000);
+                await Js.InvokeVoidAsync("window.close");
             }
         }
         else
