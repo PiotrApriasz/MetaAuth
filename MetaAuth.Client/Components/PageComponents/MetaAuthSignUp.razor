@@ -9,8 +9,8 @@
 @inject IAccountService AccountService
 @inject ITokenService TokenService
 @inject ISnackbar Snackbar
-
 @inject IJSRuntime Js
+@inject NavigationManager NavManager
 
 <MetamaskConnected SelectedAccount="@SelectedAccount" OnTokenGathered="TokenGathered" OnTokenDataGathered="TokenDataGathered"/>
 
@@ -86,33 +86,39 @@
             {
                 Snackbar.Add("You have already registered this application before. This sign up request will be abondend." +
                              " This tab will close soon", Severity.Warning);
-                await Task.Delay(5000);
-                await Js.InvokeVoidAsync("window.close");
-                return;
-            }
-            
-            var result = await TokenService.AddAppToToken(signUpModel, _tokenData);
 
-            if (!result)
-            {
-                Snackbar.Add("You have been canceled transaction. Try again or close this page", Severity.Warning);
+                signUpModel.Finished = true;
+                signUpModel.Success = false;
             }
             else
             {
-                Snackbar.Add("Successfully registered new app in your MetaAuth token." +
-                             " You will return to the app tab in a while", Severity.Success);
-                
-                signUpModel.Finished = true;
-                signUpModel.UserPublicWalletAddress = SelectedAccount;
+                var result = await TokenService.AddAppToToken(signUpModel, _tokenData);
 
+                if (!result)
+                {
+                    Snackbar.Add("You have been canceled transaction. Try again or close this page", Severity.Warning);
+                
+                    signUpModel.Finished = true;
+                    signUpModel.Success = false;
+                }
+                else
+                {
+                    Snackbar.Add("Successfully registered new app in your MetaAuth token." +
+                                 " You will return to the app tab in a while", Severity.Success);
+                
+                    signUpModel.Finished = true;
+                    signUpModel.Success = true;
+                    signUpModel.UserPublicWalletAddress = SelectedAccount;
+                }
+            
                 var finishResult = await AccountService.FinishSignUp(signUpModel);
                 
                 if (finishResult.Error)
                     Error?.ProcessError($"Error occured during updating signup request: {finishResult.Message}");
-                
-                await Task.Delay(5000);
-                await Js.InvokeVoidAsync("window.close");
             }
+            
+            await Task.Delay(5000);
+            NavManager.NavigateTo($"{signUpModel.ReturnUrl}{signUpModel.Success}");
         }
         else
         {

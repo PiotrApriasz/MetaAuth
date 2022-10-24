@@ -12,4 +12,6 @@ public class FinishSignUpRequest : IHttpRequest
     public DateTime RequestCreation { get; set; }
     public string? UserPublicWalletAddress { get; set; } = null!;
     public bool Finished { get; set; }
+    public bool Success { get; set; }
+    public string ReturnUrl { get; set; }
 }

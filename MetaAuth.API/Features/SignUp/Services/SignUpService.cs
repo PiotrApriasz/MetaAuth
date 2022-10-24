@@ -28,7 +28,8 @@ public class SignUpService : ISignUpService
             UserPublicWalletAddress = null,
             RequiredUserData = request.RequiredUserData,
             UserIdentificator = request.UserIdentificator,
-
+            ReturnUrl = request.ReturnUrl,
+            Success = false
         };
 
         await _signUpContainer.CreateItemAsync(signUpEnt, new PartitionKey(signUpEnt.AppName));
@@ -58,7 +59,9 @@ public class SignUpService : ISignUpService
             UserIdentificator = request.UserIdentificator,
             RequestCreation = request.RequestCreation,
             UserPublicWalletAddress = request.UserPublicWalletAddress,
-            Finished = request.Finished
+            Finished = request.Finished,
+            Success = request.Success,
+            ReturnUrl = request.ReturnUrl
         };
         
         await _signUpContainer.UpsertItemAsync(signUpEnt);

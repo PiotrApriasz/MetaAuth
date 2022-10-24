@@ -10,4 +10,6 @@ public class SignUpModel : AzCosmosContainerModel
     public DateTime RequestCreation { get; set; }
     public string? UserPublicWalletAddress { get; set; }
     public bool Finished { get; set; }
+    public string ReturnUrl { get; set; }
+    public bool Success { get; set; }
 }
