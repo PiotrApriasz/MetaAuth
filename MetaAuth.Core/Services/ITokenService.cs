@@ -12,4 +12,5 @@ public interface ITokenService
     Task<MetaAuthTokenData> SafeMint(MetaAuthUserData metadata, byte[] photoBytes, string userMetamaskAddress);
     Task<MetaAuthTokenData?> GetUserToken(int tokenId, string accountAddress);
     Task<bool> AddAppToToken(SignUpModel data, MetaAuthTokenData userTokenData);
+    string ValidateToken(string webAppAddress, MetaAuthTokenData userTokenData, RegisteredWebAppsModel webApp);
 }

@@ -23,6 +23,8 @@ builder.Services.AddSingleton<IMetamaskInterop, MetamaskBlazorInterop>();
 builder.Services.AddSingleton<MetamaskInterceptor>();
 builder.Services.AddSingleton<MetamaskHostProvider>();
 
+builder.Services.AddScoped<IJwtService, JwtService>();
+
 builder.Services.AddSingleton(services =>
 {
     var metamaskHostProvider = services.GetService<MetamaskHostProvider>();
@@ -54,20 +56,10 @@ builder.Services.AddScoped<ITokenService>(services =>
     return new TokenService(web3, builder.Configuration["SmartContractAddress"]!, 
         services.GetService<IIpfsService>() 
         ?? throw new InvalidOperationException
-            ($"Unable to provide service {nameof(IIpfsService)}"));
-});
-
-builder.Services.AddScoped<IAuthenticationService>(services =>
-{
-    var selectedEthereumHost = services.GetService<SelectedEthereumHostProviderService>();
-    if (selectedEthereumHost == null)
-        throw new NullReferenceException("Service is unable to connect with web3 provider");
-    var web3 = selectedEthereumHost.SelectedHost.GetWeb3Async().Result;
-
-    return new AuthenticationService(web3,
-        builder.Configuration["SmartContractAddress"]!, services.GetService<IIpfsService>() 
-                                                        ?? throw new InvalidOperationException
-                                                            ($"Unable to provide service {nameof(IIpfsService)}"));
+            ($"Unable to provide service {nameof(IIpfsService)}"),
+        services.GetService<IJwtService>()
+        ?? throw new InvalidOperationException
+            ($"Unable to provide service {nameof(IJwtService)}"));
 });
 
 builder.Services.AddScoped<IAccountService, AccountService>();

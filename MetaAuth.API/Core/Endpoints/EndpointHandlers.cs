@@ -14,7 +14,7 @@ public static class EndpointHandlers
         {
             app.MapGet(template, async (IMediator mediator, [AsParameters] TRequest request)
                     => await mediator.Send(request))
-                .AddRouteHandlerFilter<ValidatorFilter<TRequest>>();
+                .AddEndpointFilter<ValidatorFilter<TRequest>>();
         }
         else
         {
@@ -33,7 +33,7 @@ public static class EndpointHandlers
         {
             app.MapPost(template, async (IMediator mediator, TRequest request)
                     => await mediator.Send(request))
-                .AddRouteHandlerFilter<ValidatorFilter<TRequest>>();
+                .AddEndpointFilter<ValidatorFilter<TRequest>>();
         }
         else
         {

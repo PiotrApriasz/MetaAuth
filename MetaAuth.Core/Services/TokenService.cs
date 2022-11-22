@@ -1,8 +1,11 @@
-﻿using System.Numerics;
+﻿using System.Net.Http.Json;
+using System.Numerics;
 using MetaAuth.Core.Entities;
 using MetaAuth.Core.Entities.User;
+using MetaAuth.Core.Exceptions;
 using MetaAuth.Core.IPFS;
 using MetaAuth.SharedEntities.AzureCosmosDb;
+using Microsoft.Extensions.Configuration;
 using Nethereum.Contracts;
 using Nethereum.Contracts.Standards.ERC721.ContractDefinition;
 using Nethereum.Web3;
@@ -12,10 +15,13 @@ namespace MetaAuth.Core.Services;
 public class TokenService : MetaAuthBase, ITokenService
 {
     private readonly IIpfsService _ipfsService;
-    
-    public TokenService(IWeb3 web3, string address, IIpfsService ipfsService) : base(web3, address)
+    private readonly IJwtService _jwtService;
+
+    public TokenService(IWeb3 web3, string address, IIpfsService ipfsService,
+        IJwtService jwtService) : base(web3, address)
     {
         _ipfsService = ipfsService;
+        _jwtService = jwtService;
     }
     
     public async Task<MetaAuthTokenData> SafeMint(MetaAuthUserData metadata, byte[] photoBytes, string userMetamaskAddress)
@@ -92,5 +98,25 @@ public class TokenService : MetaAuthBase, ITokenService
             $"metaauth-{userTokenData.Metadata.IssueTime}-{userTokenData.Metadata.Name}{userTokenData.Metadata.Surname}.json");
 
         return await MetaAuthInstance.UpdateTokenUriRequestAsync(tokenIdNum, ipfsFileInfo.Hash);
+    }
+
+    public string ValidateToken(string webAppAddress, MetaAuthTokenData userTokenData, RegisteredWebAppsModel webApp)
+    {
+        var thisApp = userTokenData.Metadata.RegisteredApps.First(x => x.WebAppAddress == webAppAddress);
+        
+        if (thisApp is null)
+            throw new MetaAuthAuthenticationException("This MetaAuth token is not connected with this web app");
+
+        var userData = new Dictionary<string, string> { { "id", thisApp.UserId } };
+
+        foreach (var userDataType in thisApp.RequiredUserData)
+        {
+            userData.Add(userDataType, 
+                userTokenData.Metadata.GetType().GetField(userDataType)!.GetValue(null)!.ToString()!);
+        }
+
+        var token = _jwtService.GenerateToken(userData, webApp);
+
+        return token;
     }
 }

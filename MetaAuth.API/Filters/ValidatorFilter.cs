@@ -4,7 +4,7 @@ using MetaAuth.SharedEntities;
 
 namespace MetaAuth.API.Filters;
 
-public class ValidatorFilter<T> : IRouteHandlerFilter
+public class ValidatorFilter<T> : IEndpointFilter
 {
     private readonly IValidator<T> _validator;
 
@@ -13,7 +13,7 @@ public class ValidatorFilter<T> : IRouteHandlerFilter
         _validator = validator;
     }
 
-    public async ValueTask<object?> InvokeAsync(RouteHandlerInvocationContext context, RouteHandlerFilterDelegate next)
+    public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
         if (context.Arguments.SingleOrDefault(x => x?.GetType() == typeof(T)) is not T validatable)
         {
