@@ -15,7 +15,14 @@
             </MudLink>
         </MudAppBar>
         <MudMainContent>
-            @Body
+            <ErrorBoundary>
+                <ChildContent>
+                    @Body
+                </ChildContent>
+                <ErrorContent Context="ex">
+                    <Error Exception="@ex"></Error>
+                </ErrorContent>
+            </ErrorBoundary>
         </MudMainContent>
     </MudLayout>
 </div>

@@ -19,7 +19,7 @@ public class WebAppService : IWebAppsService
     public async Task<RegisteredWebAppsModel?> GetRegisteredApp(GetRegisteredAppRequest request)
     {
         var query = new QueryDefinition(
-                query: "SELECT * FROM c WHERE c.id = @appAddress")
+                query: "SELECT * FROM c WHERE c.appName = @appAddress")
             .WithParameter("@appAddress", request.WebAppAddress);
 
         using var feed = _webAppsContainer.GetItemQueryIterator<RegisteredWebAppsModel>(

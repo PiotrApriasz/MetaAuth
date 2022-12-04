@@ -8,4 +8,7 @@ public interface IAccountService
 {
     Task<SignUpData?> GetSignUpData(string requestId);
     Task<BaseResponse> FinishSignUp(SignUpModel signUpModel);
+    Task<SignInModel> GetSignInData(string requestId);
+    Task<RegisteredWebAppsModel> GetWebAppData(string webAppName);
+    Task FinishSignIn(SignInModel signInModel);
 }

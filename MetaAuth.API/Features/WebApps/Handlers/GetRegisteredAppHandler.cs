@@ -32,7 +32,7 @@ public class GetRegisteredAppHandler : IRequestHandler<GetRegisteredAppRequest, 
         return Results.NotFound(new BaseResponse
         {
             Error = true,
-            Message = "Registered app data cannot be found for provided request id"
+            Message = "Registered app data cannot be found for provided app id"
         });
     }
 }

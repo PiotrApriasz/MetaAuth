@@ -100,23 +100,30 @@ public class TokenService : MetaAuthBase, ITokenService
         return await MetaAuthInstance.UpdateTokenUriRequestAsync(tokenIdNum, ipfsFileInfo.Hash);
     }
 
-    public string ValidateToken(string webAppAddress, MetaAuthTokenData userTokenData, RegisteredWebAppsModel webApp)
+    public string? ValidateToken(string webAppAddress, MetaAuthTokenData userTokenData, RegisteredWebAppsModel webApp)
     {
-        var thisApp = userTokenData.Metadata.RegisteredApps.First(x => x.WebAppAddress == webAppAddress);
-        
+        var thisApp = userTokenData.Metadata.RegisteredApps.Find(x => x.WebAppAddress == webAppAddress);
+
         if (thisApp is null)
-            throw new MetaAuthAuthenticationException("This MetaAuth token is not connected with this web app");
+            return null;
 
         var userData = new Dictionary<string, string> { { "id", thisApp.UserId } };
 
         foreach (var userDataType in thisApp.RequiredUserData)
         {
+            if (userDataType == "username") continue;
+            
             userData.Add(userDataType, 
-                userTokenData.Metadata.GetType().GetField(userDataType)!.GetValue(null)!.ToString()!);
+                userTokenData.Metadata.GetType().GetProperty(Capitalize(userDataType))!.GetValue(userTokenData.Metadata, null)!.ToString()!);
         }
 
         var token = _jwtService.GenerateToken(userData, webApp);
 
         return token;
+    }
+
+    private static string Capitalize( string name)
+    {
+        return char.ToUpper(name[0]) + name[1..];
     }
 }

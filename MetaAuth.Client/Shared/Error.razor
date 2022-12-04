@@ -1,18 +1,25 @@
-﻿
-<CascadingValue Value="this">
-    @ChildContent
-</CascadingValue>
+﻿<MudContainer Class="mt-2">
+    <MudGrid Spacing="10" Justify="Justify.FlexStart" Class="mt-8">
+        <MudItem xs="7">
+            <MudText Typo="Typo.h3" Class="mt-8" Align="Align.Left" GutterBottom="true"><b>Something went wrong</b></MudText>
+            <MudText Typo="Typo.h4" Align="Align.Left" Class="mt-10">Error Info:</MudText>
+            <MudText Typo="Typo.h5" Align="Align.Left" Class="mt-5">@errorMessage</MudText>
+        </MudItem>
+    </MudGrid>
+    <br/>
+    <br/>
+</MudContainer>
 
 @code {
     [Parameter]
-    public RenderFragment? ChildContent { get; set; }
-    
-    [Inject] 
-    private IDialogService DialogService { get; set; } = null!;
+    public Exception? Exception { get; set; }
 
-    public async void ProcessError(string message)
+    private string errorMessage;
+
+    protected override void OnInitialized()
     {
-        await DialogService.ShowMessageBox("Error", message);
-        StateHasChanged();
+        errorMessage = Exception is not null ?
+            $"Message: {Exception.Message}\n" : "Unexpected Error occured with no error info!";
     }
+
 }

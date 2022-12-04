@@ -1,10 +1,101 @@
-﻿@page "/SignIn"
+﻿@page "/SignIn/{requestId}"
+@using Nethereum.UI
+
+@implements IDisposable;
+@inject SelectedEthereumHostProviderService SelectedHostProviderService
+@inject MetamaskHostProvider MetamaskHostProvider;
+@inject SelectedEthereumHostProviderService SelectedHostProvider;
+@using Nethereum.Metamask
+@using MetaAuth.Client.Components.PageComponents
 
 
 <MudContainer Class="mt-16 md-16">
-    
+    <MudText Typo="Typo.h2" Align="Align.Center" GutterBottom="true">MetaAuth Sign Up</MudText>
+    @if (!_metamasConnected)
+    {
+        <MudGrid Justify="Justify.Center">
+            @if (_metamaskAvailable)
+            {
+                <MudButton Class="mt-16 glass-button" Style="margin: 100px auto !important;" Variant="Variant.Filled" Size="Size.Large" OnClick="EnableEthereumAsync">
+                    <MudImage Class="mr-5" Src="images/metamask-fox.svg" Width="50" Height="50"></MudImage>Connect with Metamask
+                </MudButton>
+            }
+            else
+            {
+                <MudButton Class="mt-16 glass-button" Style="margin: 100px auto !important;" Variant="Variant.Filled" Size="Size.Large" Disabled="@true">
+                    <MudImage Class="mr-5" Src="images/metamask-fox.svg" Width="50" Height="50"></MudImage>Install Metamask extension
+                </MudButton>
+            }
+        </MudGrid>
+    }
+    else
+    {
+        <MetaAuthSignIn SelectedAccount="@_selectedAccount" RequestId="@RequestId"></MetaAuthSignIn>
+    }
 </MudContainer>
 
 @code {
+    [Parameter]
+    public string RequestId { get; set; } = null!;
     
+    [CascadingParameter]
+    public Error? Error { get; set; }
+    
+    string? _selectedAccount;
+    bool _metamaskAvailable;
+    bool _metamasConnected;
+    IEthereumHostProvider _ethereumHostProvider = null!;
+    
+    protected override void OnInitialized()
+    {
+        _ethereumHostProvider = SelectedHostProviderService.SelectedHost;
+        _ethereumHostProvider.SelectedAccountChanged += HostProvider_SelectedAccountChanged;
+    }
+    
+    public void Dispose()
+    {
+        _ethereumHostProvider.SelectedAccountChanged -= HostProvider_SelectedAccountChanged;
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _metamaskAvailable = await _ethereumHostProvider.CheckProviderAvailabilityAsync();
+        if (_metamaskAvailable)
+        {
+            _selectedAccount = await _ethereumHostProvider.GetProviderSelectedAccountAsync();
+        }
+    }
+    
+    private Task HostProvider_SelectedAccountChanged(string account)
+    {
+        _selectedAccount = account;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+    
+    private async Task EnableEthereumAsync()
+    {
+        _selectedAccount = await MetamaskHostProvider.EnableProviderAsync();
+        await SelectedHostProvider.SetSelectedEthereumHostProvider(MetamaskHostProvider);
+        _metamasConnected = true;
+        StateHasChanged(); 
+    }
 }
+
+<style>
+    .glass-button {
+        color: #fff;
+          background-color: rgba(255,255,255,0.1);
+          width: 350px;
+          border-radius: 15px;
+          padding: 20px;
+          backdrop-filter: blur(30px);
+          text-transform: capitalize !important;
+          font-size: 17px;
+          letter-spacing: 1px;
+    }
+    
+    .glass-button:hover {
+           background-color: rgba(255,255,255,0.2);
+         }
+</style>
