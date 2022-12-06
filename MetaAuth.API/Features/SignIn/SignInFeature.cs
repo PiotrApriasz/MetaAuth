@@ -18,6 +18,7 @@ public class SignInFeature : IFeature
         endpoints.MapPost<InitialSignInRequest>("signIn", false);
         endpoints.MapGet<GetSignInDataRequest>("signIn/{RequestId}", false);
         endpoints.MapPost<FinishSignInRequest>("signIn/finish", false);
+        endpoints.MapGet<GetJwtTokenRequest>("signIn/jwt/{RequestId}", false);
         return endpoints;
     }
 }

@@ -9,7 +9,6 @@ public class FinishSignInHandler : IRequestHandler<FinishSignInRequest, IResult>
 {
     private readonly ISignInService _signInService;
 
-
     public FinishSignInHandler(ISignInService signInService)
     {
         _signInService = signInService;

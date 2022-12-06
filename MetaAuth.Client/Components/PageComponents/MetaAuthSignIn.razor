@@ -87,26 +87,32 @@
 
                 _signInModel.Finished = true;
                 _signInModel.Success = false;
-
-                await Task.Delay(5000);
-                NavManager.NavigateTo($"{_signInModel.ReturnUrl}{false}");
             }
             else
             {
                 _signInModel.Finished = true;
                 _signInModel.Success = true;
                 _signInModel.AccessToken = token;
-
-                await AccountService.FinishSignIn(_signInModel);
-                
-                NavManager.NavigateTo($"{_signInModel.ReturnUrl}{true}");
+            }
+            
+            await AccountService.FinishSignIn(_signInModel);
+            
+            if (_signInModel.Success)
+                NavManager.NavigateTo($"{_signInModel.SuccessReturnUrl}{_signInModel.Id}");
+            else
+            {
+                await Task.Delay(5000);
+                NavManager.NavigateTo(_signInModel.FailReturnUrl);
             }
         }
     }
 
-    private void Cancel()
+    private async Task Cancel()
     {
-        NavManager.NavigateTo($"{_signInModel.ReturnUrl}{false}");
+        _signInModel.Finished = true;
+        _signInModel.Success = false;
+        await AccountService.FinishSignIn(_signInModel);
+        NavManager.NavigateTo(_signInModel.FailReturnUrl);
     }
 
     private async Task GetUserTokenData()

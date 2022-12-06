@@ -22,7 +22,8 @@ public class SignInService : ISignInService
             Id = Guid.NewGuid()
                 .ToString(),
             AppName = request.AppName,
-            ReturnUrl = request.ReturnUrl,
+            FailReturnUrl = request.FailReturnUrl,
+            SuccessReturnUrl = request.SuccessReturnUrl,
             RequestCreation = DateTime.Now,
             Finished = false,
             Success = false
@@ -51,7 +52,8 @@ public class SignInService : ISignInService
         {
             Id = request.Id,
             AppName = request.AppName,
-            ReturnUrl = request.ReturnUrl,
+            FailReturnUrl = request.FailReturnUrl,
+            SuccessReturnUrl = request.SuccessReturnUrl,
             AccessToken = request.AccessToken,
             RequestCreation = request.RequestCreation,
             Finished = request.Finished,
@@ -60,6 +62,18 @@ public class SignInService : ISignInService
 
         await _signInContainer.UpsertItemAsync(signInEnt);
     }
-    
-    
+
+    public async Task<string?> GetAccessToken(GetJwtTokenRequest request)
+    {
+        var query = new QueryDefinition(
+                query: "SELECT * FROM c WHERE c.id = @requestId")
+            .WithParameter("@requestId", request.RequestId);
+
+        using var feed = _signInContainer.GetItemQueryIterator<SignInModel>(
+            queryDefinition: query);
+        var response = await feed.ReadNextAsync();
+        var result = response.FirstOrDefault();
+
+        return result?.AccessToken;
+    }
 }
