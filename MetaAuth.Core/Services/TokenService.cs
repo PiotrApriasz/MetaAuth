@@ -107,7 +107,11 @@ public class TokenService : MetaAuthBase, ITokenService
         if (thisApp is null)
             return null;
 
-        var userData = new Dictionary<string, string> { { "id", thisApp.UserId } };
+        var userData = new Dictionary<string, string>
+        {
+            { "id", thisApp.UserId },
+            { "type", "MetaAuth" }
+        };
 
         foreach (var userDataType in thisApp.RequiredUserData)
         {
